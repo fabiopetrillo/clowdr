@@ -47,7 +47,7 @@ export default function VideoPage(): JSX.Element {
 
     const { refetch } = useSelectChannelsQuery();
 
-    const { register, errors, handleSubmit, formState } = useForm();
+    const { register, errors, handleSubmit, formState, reset } = useForm();
 
     async function onSubmit(data: FormData) {
         const result = await createChannelMutation({
@@ -58,6 +58,7 @@ export default function VideoPage(): JSX.Element {
         if (result.data) {
             await refetch();
         }
+        reset();
     }
 
     return (

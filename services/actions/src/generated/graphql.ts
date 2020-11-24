@@ -5396,7 +5396,8 @@ export type Uuid_Comparison_Exp = {
 };
 
 export type Insert_Channel_OneMutationVariables = Exact<{
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  vonage_session_id: Scalars['String'];
 }>;
 
 
@@ -5410,8 +5411,8 @@ export type Insert_Channel_OneMutation = (
 
 
 export const Insert_Channel_OneDocument = gql`
-    mutation insert_Channel_one($name: String) {
-  insert_Channel_one(object: {name: $name, vonage_session_id: "foo"}) {
+    mutation insert_Channel_one($name: String!, $vonage_session_id: String!) {
+  insert_Channel_one(object: {name: $name, vonage_session_id: $vonage_session_id}) {
     id
   }
 }
@@ -5423,7 +5424,7 @@ export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    insert_Channel_one(variables?: Insert_Channel_OneMutationVariables): Promise<Insert_Channel_OneMutation> {
+    insert_Channel_one(variables: Insert_Channel_OneMutationVariables): Promise<Insert_Channel_OneMutation> {
       return withWrapper(() => client.request<Insert_Channel_OneMutation>(print(Insert_Channel_OneDocument), variables));
     }
   };

@@ -89,7 +89,7 @@ app.post("/echo", jsonParser, async (req: Request, res: Response) => {
     return res.json(result);
 });
 
-app.post("/channel", jsonParser, async (req: Request, res: Response) => {
+app.post("/channel/create", jsonParser, async (req: Request, res: Response) => {
     const params: createChannelArgs = req.body.input;
     try {
         const result = await createChannelHandler(params.name);
