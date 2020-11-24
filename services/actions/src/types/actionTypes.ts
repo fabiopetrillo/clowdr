@@ -1,5 +1,7 @@
 type Maybe<T> = T | null;
 
+type uuid = string;
+
 type SampleOutput = {
     accessToken: string;
 };
@@ -10,6 +12,10 @@ type EchoOutput = {
 
 type ProtectedEchoOutput = {
     message: string;
+};
+
+type CreateChannelOutput = {
+    id: uuid;
 };
 
 type SampleInput = {
@@ -26,10 +32,18 @@ type Query = {
     protectedEcho?: Maybe<ProtectedEchoOutput>;
 };
 
+type Mutation = {
+    createChannel?: Maybe<CreateChannelOutput>;
+};
+
 type echoArgs = {
     message: string;
 };
 
 type protectedEchoArgs = {
     message: string;
+};
+
+type createChannelArgs = {
+    name: string;
 };

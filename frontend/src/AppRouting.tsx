@@ -45,6 +45,9 @@ export default function Routing(): JSX.Element {
             <Route exact path="/protectedEcho">
                 <ProtectedEcho />
             </Route>
+            <Route exact path="/video">
+                <VideoPage />
+            </Route>
 
             <Route
                 exact

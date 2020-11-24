@@ -1,3 +1,10 @@
+type Mutation {
+  createChannel (
+    name: String!
+  ): CreateChannelOutput
+}
+
+
 type Query {
   echo (
     message: String!
@@ -33,5 +40,9 @@ type EchoOutput {
 
 type ProtectedEchoOutput {
   message : String!
+}
+
+type CreateChannelOutput {
+  id : uuid!
 }
 

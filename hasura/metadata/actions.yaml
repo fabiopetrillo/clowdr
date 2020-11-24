@@ -1,4 +1,11 @@
 actions:
+- name: createChannel
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/channel'
+    forward_client_headers: true
+  permissions:
+  - role: user
 - name: echo
   definition:
     kind: ""
@@ -22,4 +29,13 @@ custom_types:
   - name: SampleOutput
   - name: EchoOutput
   - name: ProtectedEchoOutput
+  - name: CreateChannelOutput
+    relationships:
+    - remote_table:
+        schema: public
+        name: Channel
+      name: channel
+      type: object
+      field_mapping:
+        id: id
   scalars: []

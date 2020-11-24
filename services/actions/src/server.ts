@@ -4,6 +4,7 @@ import express, { Request, Response } from "express";
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
 import checkScopes from "./checkScopes";
+import createChannelHandler from "./handlers/channel/create";
 import handlerEcho from "./handlers/echo";
 import protectedEchoHandler from "./handlers/protectedEcho";
 
@@ -87,6 +88,18 @@ app.post("/echo", jsonParser, async (req: Request, res: Response) => {
     const result = handlerEcho(params);
     return res.json(result);
 });
+
+app.post("/channel", jsonParser, async (req: Request, res: Response) => {
+    const params: createChannelArgs = req.body.input;
+    try {
+        const result = await createChannelHandler(params.name);
+        return res.json(result);
+    } catch (e) {
+        return res.status(500).json(JSON.stringify(e));
+    }
+});
+
+app.post("/");
 
 const portNumber = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 export const server = app.listen(portNumber, function () {
