@@ -14,7 +14,7 @@ import {
     useGetChannelTokenQuery,
 } from "../../generated/graphql";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
     OTSession,
     OTPublisher,
@@ -22,6 +22,7 @@ import {
     OTSubscriber,
     preloadScript,
 } from "opentok-react";
+import useQueryErrorToast from "../../hooks/useQueryErrorToast";
 
 const _createChannel = gql`
     mutation createChannel($name: String!) {
@@ -66,18 +67,24 @@ function VideoPage(): JSX.Element {
     const [selectedChannel, setSelectedChannel] = useState<
         ChannelFieldsFragment | undefined
     >();
+    const [queryError, setQueryError] = useState();
+    useQueryErrorToast(queryError);
     const openTokApiKey = import.meta.env.SNOWPACK_PUBLIC_OPENTOK_API_KEY;
 
     async function onSubmit(data: FormData) {
-        const result = await createChannelMutation({
-            variables: {
-                name: data.name,
-            },
-        });
-        if (result.data) {
-            await refetch();
+        try {
+            const result = await createChannelMutation({
+                variables: {
+                    name: data.name,
+                },
+            });
+            if (result.data) {
+                await refetch();
+            }
+            reset();
+        } catch (e) {
+            setQueryError(e);
         }
-        reset();
     }
 
     return (

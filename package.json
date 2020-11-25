@@ -6,7 +6,8 @@
     "scripts": {
         "postinstall": "cd services/actions && npm install && cd ../../frontend && npm install",
         "heroku-postbuild": "cd services/actions && npx tsc",
-        "run-services-actions": "heroku local -p 3001 web"
+        "run-services-actions": "heroku local -p 3001 web",
+        "run-services-playout": "heroku local -p 3002 playout"
     },
     "repository": {
         "type": "git",

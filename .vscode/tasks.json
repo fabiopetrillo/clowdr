@@ -82,7 +82,37 @@
             },
             "args": ["local", "web"]
         },
-        // Fontend -- GraphQL Codegen
+        // Playout service -- Local Development
+        {
+            "label": "Playout Service -- Local Development",
+            "type": "shell",
+            "isBackground": true,
+            "command": "npm",
+            "problemMatcher": [],
+            "options": {
+                "cwd": "${workspaceFolder}/services/playout"
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "args": ["run", "dev"]
+        },
+        // Playout service -- Heroku Local
+        {
+            "label": "Playout Service -- Heroku Local",
+            "type": "shell",
+            "isBackground": true,
+            "command": "heroku",
+            "problemMatcher": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "args": ["local", "playout"]
+        },
+        // Frontend -- GraphQL Codegen
         {
             "label": "Frontend -- GraphQL Codegen",
             "type": "shell",
