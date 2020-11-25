@@ -6,6 +6,7 @@ import PageNotFound from "./aspects/Errors/PageNotFound";
 import PageNotImplemented from "./aspects/Errors/PageNotImplemented";
 import ExistingUserLandingPage from "./aspects/Users/ExistingUser/LandingPage";
 import NewUserLandingPage from "./aspects/Users/NewUser/LandingPage";
+import VideoPage from "./aspects/Channel/VideoPage";
 
 export default function Routing(): JSX.Element {
     return (

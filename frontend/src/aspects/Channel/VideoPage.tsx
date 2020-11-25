@@ -22,7 +22,7 @@ import {
     OTSubscriber,
     preloadScript,
 } from "opentok-react";
-import useQueryErrorToast from "../../hooks/useQueryErrorToast";
+import useQueryErrorToast from "../GQL/useQueryErrorToast";
 
 const _createChannel = gql`
     mutation createChannel($name: String!) {
