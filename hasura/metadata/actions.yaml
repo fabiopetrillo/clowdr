@@ -13,6 +13,13 @@ actions:
   permissions:
   - role: unauthenticated
   - role: user
+- name: getChannelToken
+  definition:
+    kind: ""
+    handler: '{{ACTION_BASE_URL}}/channel/token'
+    forward_client_headers: true
+  permissions:
+  - role: user
 - name: protectedEcho
   definition:
     kind: ""
@@ -25,6 +32,7 @@ custom_types:
   input_objects:
   - name: SampleInput
   - name: EchoInput
+  - name: GetChannelTokenInput
   objects:
   - name: SampleOutput
   - name: EchoOutput
@@ -38,4 +46,5 @@ custom_types:
       type: object
       field_mapping:
         id: id
+  - name: GetChannelTokenOutput
   scalars: []

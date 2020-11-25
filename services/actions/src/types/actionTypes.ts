@@ -18,6 +18,10 @@ type CreateChannelOutput = {
     id: uuid;
 };
 
+type GetChannelTokenOutput = {
+    token: string;
+};
+
 type SampleInput = {
     username: string;
     password: string;
@@ -27,8 +31,13 @@ type EchoInput = {
     message: string;
 };
 
+type GetChannelTokenInput = {
+    channelId: uuid;
+};
+
 type Query = {
     echo?: Maybe<EchoOutput>;
+    getChannelToken?: Maybe<GetChannelTokenOutput>;
     protectedEcho?: Maybe<ProtectedEchoOutput>;
 };
 
@@ -38,6 +47,10 @@ type Mutation = {
 
 type echoArgs = {
     message: string;
+};
+
+type getChannelTokenArgs = {
+    channelId: uuid;
 };
 
 type protectedEchoArgs = {

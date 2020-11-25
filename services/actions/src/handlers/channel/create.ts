@@ -3,7 +3,7 @@ import { sdk } from "../../graphqlClient";
 import { createSession } from "../../opentok";
 
 export const createChannel = gql`
-    mutation insert_Channel_one($name: String!, $vonage_session_id: String!) {
+    mutation createChannel($name: String!, $vonage_session_id: String!) {
         insert_Channel_one(
             object: { name: $name, vonage_session_id: $vonage_session_id }
         ) {
@@ -27,7 +27,7 @@ export default async function createChannelHandler(
         throw new Error("Error creating session");
     }
 
-    const result = await sdk.insert_Channel_one({
+    const result = await sdk.createChannel({
         name,
         vonage_session_id: session.sessionId,
     });

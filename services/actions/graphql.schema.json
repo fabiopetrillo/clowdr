@@ -16725,6 +16725,58 @@
       },
       {
         "kind": "INPUT_OBJECT",
+        "name": "GetChannelTokenInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "channelId",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "uuid",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "GetChannelTokenOutput",
+        "description": null,
+        "fields": [
+          {
+            "name": "token",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
         "name": "Int_comparison_exp",
         "description": "expression to compare columns of type Int. All fields are combined with logical 'AND'.",
         "fields": null,
@@ -25301,6 +25353,33 @@
             "deprecationReason": null
           },
           {
+            "name": "getChannelToken",
+            "description": "perform the action: \"getChannelToken\"",
+            "args": [
+              {
+                "name": "channelId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "uuid",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "GetChannelTokenOutput",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "protectedEcho",
             "description": "perform the action: \"protectedEcho\"",
             "args": [
@@ -28174,6 +28253,33 @@
             "type": {
               "kind": "OBJECT",
               "name": "EchoOutput",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "getChannelToken",
+            "description": "perform the action: \"getChannelToken\"",
+            "args": [
+              {
+                "name": "channelId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "uuid",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "GetChannelTokenOutput",
               "ofType": null
             },
             "isDeprecated": false,

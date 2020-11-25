@@ -2698,6 +2698,15 @@ export enum FollowedChat_Update_Column {
   UserId = 'userId'
 }
 
+export type GetChannelTokenInput = {
+  channelId: Scalars['uuid'];
+};
+
+export type GetChannelTokenOutput = {
+  __typename?: 'GetChannelTokenOutput';
+  token: Scalars['String'];
+};
+
 /** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: Maybe<Scalars['Int']>;
@@ -3988,6 +3997,8 @@ export type Query_Root = {
   PinnedChat_by_pk?: Maybe<PinnedChat>;
   /** perform the action: "echo" */
   echo?: Maybe<EchoOutput>;
+  /** perform the action: "getChannelToken" */
+  getChannelToken?: Maybe<GetChannelTokenOutput>;
   /** perform the action: "protectedEcho" */
   protectedEcho?: Maybe<ProtectedEchoOutput>;
   /** fetch data from the table: "user" */
@@ -4344,6 +4355,12 @@ export type Query_RootEchoArgs = {
 
 
 /** query root */
+export type Query_RootGetChannelTokenArgs = {
+  channelId: Scalars['uuid'];
+};
+
+
+/** query root */
 export type Query_RootProtectedEchoArgs = {
   message: Scalars['String'];
 };
@@ -4457,6 +4474,8 @@ export type Subscription_Root = {
   PinnedChat_by_pk?: Maybe<PinnedChat>;
   /** perform the action: "echo" */
   echo?: Maybe<EchoOutput>;
+  /** perform the action: "getChannelToken" */
+  getChannelToken?: Maybe<GetChannelTokenOutput>;
   /** perform the action: "protectedEcho" */
   protectedEcho?: Maybe<ProtectedEchoOutput>;
   /** fetch data from the table: "user" */
@@ -4809,6 +4828,12 @@ export type Subscription_RootPinnedChat_By_PkArgs = {
 /** subscription root */
 export type Subscription_RootEchoArgs = {
   message: Scalars['String'];
+};
+
+
+/** subscription root */
+export type Subscription_RootGetChannelTokenArgs = {
+  channelId: Scalars['uuid'];
 };
 
 
@@ -5395,13 +5420,13 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
-export type Insert_Channel_OneMutationVariables = Exact<{
+export type CreateChannelMutationVariables = Exact<{
   name: Scalars['String'];
   vonage_session_id: Scalars['String'];
 }>;
 
 
-export type Insert_Channel_OneMutation = (
+export type CreateChannelMutation = (
   { __typename?: 'mutation_root' }
   & { insert_Channel_one?: Maybe<(
     { __typename?: 'Channel' }
@@ -5409,11 +5434,31 @@ export type Insert_Channel_OneMutation = (
   )> }
 );
 
+export type GetChannelQueryVariables = Exact<{
+  channelId: Scalars['uuid'];
+}>;
 
-export const Insert_Channel_OneDocument = gql`
-    mutation insert_Channel_one($name: String!, $vonage_session_id: String!) {
+
+export type GetChannelQuery = (
+  { __typename?: 'query_root' }
+  & { Channel: Array<(
+    { __typename?: 'Channel' }
+    & Pick<Channel, 'vonage_session_id'>
+  )> }
+);
+
+
+export const CreateChannelDocument = gql`
+    mutation createChannel($name: String!, $vonage_session_id: String!) {
   insert_Channel_one(object: {name: $name, vonage_session_id: $vonage_session_id}) {
     id
+  }
+}
+    `;
+export const GetChannelDocument = gql`
+    query getChannel($channelId: uuid!) {
+  Channel(where: {id: {_eq: $channelId}}) {
+    vonage_session_id
   }
 }
     `;
@@ -5424,8 +5469,11 @@ export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    insert_Channel_one(variables: Insert_Channel_OneMutationVariables): Promise<Insert_Channel_OneMutation> {
-      return withWrapper(() => client.request<Insert_Channel_OneMutation>(print(Insert_Channel_OneDocument), variables));
+    createChannel(variables: CreateChannelMutationVariables): Promise<CreateChannelMutation> {
+      return withWrapper(() => client.request<CreateChannelMutation>(print(CreateChannelDocument), variables));
+    },
+    getChannel(variables: GetChannelQueryVariables): Promise<GetChannelQuery> {
+      return withWrapper(() => client.request<GetChannelQuery>(print(GetChannelDocument), variables));
     }
   };
 }

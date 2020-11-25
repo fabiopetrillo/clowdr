@@ -13,6 +13,13 @@ type Query {
 
 
 type Query {
+  getChannelToken (
+    channelId: uuid!
+  ): GetChannelTokenOutput
+}
+
+
+type Query {
   protectedEcho (
     message: String!
   ): ProtectedEchoOutput
@@ -30,6 +37,10 @@ input EchoInput {
   message : String!
 }
 
+input GetChannelTokenInput {
+  channelId : uuid!
+}
+
 type SampleOutput {
   accessToken : String!
 }
@@ -44,5 +55,9 @@ type ProtectedEchoOutput {
 
 type CreateChannelOutput {
   id : uuid!
+}
+
+type GetChannelTokenOutput {
+  token : String!
 }
 

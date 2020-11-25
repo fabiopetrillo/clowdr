@@ -5,6 +5,7 @@ import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
 import checkScopes from "./checkScopes";
 import createChannelHandler from "./handlers/channel/create";
+import getChannelTokenHandler from "./handlers/channel/token";
 import handlerEcho from "./handlers/echo";
 import protectedEchoHandler from "./handlers/protectedEcho";
 
@@ -93,6 +94,16 @@ app.post("/channel/create", jsonParser, async (req: Request, res: Response) => {
     const params: createChannelArgs = req.body.input;
     try {
         const result = await createChannelHandler(params.name);
+        return res.json(result);
+    } catch (e) {
+        return res.status(500).json(JSON.stringify(e));
+    }
+});
+
+app.post("/channel/token", jsonParser, async (req: Request, res: Response) => {
+    const params: getChannelTokenArgs = req.body.input;
+    try {
+        const result = await getChannelTokenHandler(params);
         return res.json(result);
     } catch (e) {
         return res.status(500).json(JSON.stringify(e));
