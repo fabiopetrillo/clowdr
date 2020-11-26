@@ -26,10 +26,22 @@
         "node": "14.x"
     },
     "dependencies": {
+        "@apollo/client": "^3.2.9",
         "@aws-sdk/client-medialive": "^1.0.0-rc.7",
-        "express": "^4.17.1"
+        "@aws-sdk/region-provider": "0.1.0-preview.1",
+        "express": "^4.17.1",
+        "graphql": "^15.4.0"
     },
     "devDependencies": {
+        "@graphql-codegen/cli": "1.19.2",
+        "@graphql-codegen/fragment-matcher": "2.0.0",
+        "@graphql-codegen/introspection": "1.18.0",
+        "@graphql-codegen/typed-document-node": "^1.18.0",
+        "@graphql-codegen/typescript": "1.17.11",
+        "@graphql-codegen/typescript-document-nodes": "1.17.8",
+        "@graphql-codegen/typescript-graphql-files-modules": "1.18.0",
+        "@graphql-codegen/typescript-graphql-request": "^2.0.2",
+        "@graphql-codegen/typescript-operations": "1.17.10",
         "@types/express": "^4.17.9",
         "dotenv": "^8.2.0",
         "node-env-run": "^4.0.2",
