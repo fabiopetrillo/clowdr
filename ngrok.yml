@@ -1,0 +1,9 @@
+tunnels:
+  auth:
+    addr: 8080
+    proto: http
+    bind_tls: true
+  playout:
+    addr: 3002
+    proto: http
+    bind_tls: true

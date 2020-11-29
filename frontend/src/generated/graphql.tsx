@@ -28,6 +28,189 @@ export type Boolean_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Boolean']>>;
 };
 
+/** columns and relationships of "Channel" */
+export type Channel = {
+  __typename?: 'Channel';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  name: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+  vonage_session_id: Scalars['String'];
+};
+
+/** aggregated selection of "Channel" */
+export type Channel_Aggregate = {
+  __typename?: 'Channel_aggregate';
+  aggregate?: Maybe<Channel_Aggregate_Fields>;
+  nodes: Array<Channel>;
+};
+
+/** aggregate fields of "Channel" */
+export type Channel_Aggregate_Fields = {
+  __typename?: 'Channel_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Channel_Max_Fields>;
+  min?: Maybe<Channel_Min_Fields>;
+};
+
+
+/** aggregate fields of "Channel" */
+export type Channel_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Channel_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "Channel" */
+export type Channel_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Channel_Max_Order_By>;
+  min?: Maybe<Channel_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "Channel" */
+export type Channel_Arr_Rel_Insert_Input = {
+  data: Array<Channel_Insert_Input>;
+  on_conflict?: Maybe<Channel_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "Channel". All fields are combined with a logical 'AND'. */
+export type Channel_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Channel_Bool_Exp>>>;
+  _not?: Maybe<Channel_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Channel_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  vonage_session_id?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "Channel" */
+export enum Channel_Constraint {
+  /** unique or primary key constraint */
+  ChannelPkey = 'Channel_pkey'
+}
+
+/** input type for inserting data into table "Channel" */
+export type Channel_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  vonage_session_id?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Channel_Max_Fields = {
+  __typename?: 'Channel_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  vonage_session_id?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "Channel" */
+export type Channel_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  vonage_session_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Channel_Min_Fields = {
+  __typename?: 'Channel_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  vonage_session_id?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "Channel" */
+export type Channel_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  vonage_session_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "Channel" */
+export type Channel_Mutation_Response = {
+  __typename?: 'Channel_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Channel>;
+};
+
+/** input type for inserting object relation for remote table "Channel" */
+export type Channel_Obj_Rel_Insert_Input = {
+  data: Channel_Insert_Input;
+  on_conflict?: Maybe<Channel_On_Conflict>;
+};
+
+/** on conflict condition type for table "Channel" */
+export type Channel_On_Conflict = {
+  constraint: Channel_Constraint;
+  update_columns: Array<Channel_Update_Column>;
+  where?: Maybe<Channel_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "Channel" */
+export type Channel_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  vonage_session_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "Channel" */
+export type Channel_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "Channel" */
+export enum Channel_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  VonageSessionId = 'vonage_session_id'
+}
+
+/** input type for updating data in table "Channel" */
+export type Channel_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  vonage_session_id?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "Channel" */
+export enum Channel_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  VonageSessionId = 'vonage_session_id'
+}
+
 /** columns and relationships of "Chat" */
 export type Chat = {
   __typename?: 'Chat';
@@ -2082,6 +2265,12 @@ export enum Chat_Update_Column {
   UpdatedAt = 'updatedAt'
 }
 
+export type CreateChannelOutput = {
+  __typename?: 'CreateChannelOutput';
+  channel?: Maybe<Channel>;
+  id: Scalars['uuid'];
+};
+
 export type EchoInput = {
   message: Scalars['String'];
 };
@@ -2507,6 +2696,15 @@ export enum FollowedChat_Update_Column {
   /** column name */
   UserId = 'userId'
 }
+
+export type GetChannelTokenInput = {
+  channelId: Scalars['uuid'];
+};
+
+export type GetChannelTokenOutput = {
+  __typename?: 'GetChannelTokenOutput';
+  token: Scalars['String'];
+};
 
 /** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
@@ -3432,6 +3630,19 @@ export enum User_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+/** fields of action: "createChannel" */
+export type CreateChannel = {
+  __typename?: 'createChannel';
+  /** the time at which this action was created */
+  created_at?: Maybe<Scalars['timestamptz']>;
+  /** errors related to the invocation */
+  errors?: Maybe<Scalars['json']>;
+  /** the unique id of an action */
+  id?: Maybe<Scalars['uuid']>;
+  /** the output fields of this action */
+  output?: Maybe<CreateChannelOutput>;
+};
+
 
 /** expression to compare columns of type json. All fields are combined with logical 'AND'. */
 export type Json_Comparison_Exp = {
@@ -3473,6 +3684,12 @@ export type Jsonb_Comparison_Exp = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** perform the action: "createChannel" */
+  createChannel: Scalars['uuid'];
+  /** delete data from the table: "Channel" */
+  delete_Channel?: Maybe<Channel_Mutation_Response>;
+  /** delete single row from the table: "Channel" */
+  delete_Channel_by_pk?: Maybe<Channel>;
   /** delete data from the table: "Chat" */
   delete_Chat?: Maybe<Chat_Mutation_Response>;
   /** delete data from the table: "ChatMember" */
@@ -3525,6 +3742,10 @@ export type Mutation_Root = {
   delete_User?: Maybe<User_Mutation_Response>;
   /** delete single row from the table: "User" */
   delete_User_by_pk?: Maybe<User>;
+  /** insert data into the table: "Channel" */
+  insert_Channel?: Maybe<Channel_Mutation_Response>;
+  /** insert a single row into the table: "Channel" */
+  insert_Channel_one?: Maybe<Channel>;
   /** insert data into the table: "Chat" */
   insert_Chat?: Maybe<Chat_Mutation_Response>;
   /** insert data into the table: "ChatMember" */
@@ -3577,6 +3798,10 @@ export type Mutation_Root = {
   insert_User?: Maybe<User_Mutation_Response>;
   /** insert a single row into the table: "User" */
   insert_User_one?: Maybe<User>;
+  /** update data of the table: "Channel" */
+  update_Channel?: Maybe<Channel_Mutation_Response>;
+  /** update single row of the table: "Channel" */
+  update_Channel_by_pk?: Maybe<Channel>;
   /** update data of the table: "Chat" */
   update_Chat?: Maybe<Chat_Mutation_Response>;
   /** update data of the table: "ChatMember" */
@@ -3629,6 +3854,24 @@ export type Mutation_Root = {
   update_User?: Maybe<User_Mutation_Response>;
   /** update single row of the table: "User" */
   update_User_by_pk?: Maybe<User>;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateChannelArgs = {
+  name: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_ChannelArgs = {
+  where: Channel_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Channel_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -3785,6 +4028,20 @@ export type Mutation_RootDelete_UserArgs = {
 /** mutation root */
 export type Mutation_RootDelete_User_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_ChannelArgs = {
+  objects: Array<Channel_Insert_Input>;
+  on_conflict?: Maybe<Channel_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Channel_OneArgs = {
+  object: Channel_Insert_Input;
+  on_conflict?: Maybe<Channel_On_Conflict>;
 };
 
 
@@ -3967,6 +4224,20 @@ export type Mutation_RootInsert_UserArgs = {
 export type Mutation_RootInsert_User_OneArgs = {
   object: User_Insert_Input;
   on_conflict?: Maybe<User_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ChannelArgs = {
+  _set?: Maybe<Channel_Set_Input>;
+  where: Channel_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Channel_By_PkArgs = {
+  _set?: Maybe<Channel_Set_Input>;
+  pk_columns: Channel_Pk_Columns_Input;
 };
 
 
@@ -4184,6 +4455,12 @@ export enum Order_By {
 /** query root */
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "Channel" */
+  Channel: Array<Channel>;
+  /** fetch aggregated fields from the table: "Channel" */
+  Channel_aggregate: Channel_Aggregate;
+  /** fetch data from the table: "Channel" using primary key columns */
+  Channel_by_pk?: Maybe<Channel>;
   /** fetch data from the table: "Chat" */
   Chat: Array<Chat>;
   /** fetch data from the table: "ChatMember" */
@@ -4262,10 +4539,40 @@ export type Query_Root = {
   User_aggregate: User_Aggregate;
   /** fetch data from the table: "User" using primary key columns */
   User_by_pk?: Maybe<User>;
+  /** retrieve the result of action: "createChannel" */
+  createChannel?: Maybe<CreateChannel>;
   /** perform the action: "echo" */
   echo?: Maybe<EchoOutput>;
+  /** perform the action: "getChannelToken" */
+  getChannelToken?: Maybe<GetChannelTokenOutput>;
   /** perform the action: "protectedEcho" */
   protectedEcho?: Maybe<ProtectedEchoOutput>;
+};
+
+
+/** query root */
+export type Query_RootChannelArgs = {
+  distinct_on?: Maybe<Array<Channel_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Channel_Order_By>>;
+  where?: Maybe<Channel_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChannel_AggregateArgs = {
+  distinct_on?: Maybe<Array<Channel_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Channel_Order_By>>;
+  where?: Maybe<Channel_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChannel_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -4608,8 +4915,20 @@ export type Query_RootUser_By_PkArgs = {
 
 
 /** query root */
+export type Query_RootCreateChannelArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
 export type Query_RootEchoArgs = {
   message: Scalars['String'];
+};
+
+
+/** query root */
+export type Query_RootGetChannelTokenArgs = {
+  channelId: Scalars['uuid'];
 };
 
 
@@ -4621,6 +4940,12 @@ export type Query_RootProtectedEchoArgs = {
 /** subscription root */
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "Channel" */
+  Channel: Array<Channel>;
+  /** fetch aggregated fields from the table: "Channel" */
+  Channel_aggregate: Channel_Aggregate;
+  /** fetch data from the table: "Channel" using primary key columns */
+  Channel_by_pk?: Maybe<Channel>;
   /** fetch data from the table: "Chat" */
   Chat: Array<Chat>;
   /** fetch data from the table: "ChatMember" */
@@ -4699,10 +5024,40 @@ export type Subscription_Root = {
   User_aggregate: User_Aggregate;
   /** fetch data from the table: "User" using primary key columns */
   User_by_pk?: Maybe<User>;
+  /** retrieve the result of action: "createChannel" */
+  createChannel?: Maybe<CreateChannel>;
   /** perform the action: "echo" */
   echo?: Maybe<EchoOutput>;
+  /** perform the action: "getChannelToken" */
+  getChannelToken?: Maybe<GetChannelTokenOutput>;
   /** perform the action: "protectedEcho" */
   protectedEcho?: Maybe<ProtectedEchoOutput>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChannelArgs = {
+  distinct_on?: Maybe<Array<Channel_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Channel_Order_By>>;
+  where?: Maybe<Channel_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChannel_AggregateArgs = {
+  distinct_on?: Maybe<Array<Channel_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Channel_Order_By>>;
+  where?: Maybe<Channel_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChannel_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -5045,8 +5400,20 @@ export type Subscription_RootUser_By_PkArgs = {
 
 
 /** subscription root */
+export type Subscription_RootCreateChannelArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
 export type Subscription_RootEchoArgs = {
   message: Scalars['String'];
+};
+
+
+/** subscription root */
+export type Subscription_RootGetChannelTokenArgs = {
+  channelId: Scalars['uuid'];
 };
 
 
@@ -5082,6 +5449,58 @@ export type Uuid_Comparison_Exp = {
   _neq?: Maybe<Scalars['uuid']>;
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
+
+export type CreateChannelMutationVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type CreateChannelMutation = (
+  { __typename?: 'mutation_root' }
+  & Pick<Mutation_Root, 'createChannel'>
+);
+
+export type CreateChannelSubscriptionSubscriptionVariables = Exact<{
+  jobId: Scalars['uuid'];
+}>;
+
+
+export type CreateChannelSubscriptionSubscription = (
+  { __typename?: 'subscription_root' }
+  & { createChannel?: Maybe<(
+    { __typename?: 'createChannel' }
+    & Pick<CreateChannel, 'errors'>
+  )> }
+);
+
+export type SelectChannelsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SelectChannelsQuery = (
+  { __typename?: 'query_root' }
+  & { Channel: Array<(
+    { __typename?: 'Channel' }
+    & ChannelFieldsFragment
+  )> }
+);
+
+export type ChannelFieldsFragment = (
+  { __typename?: 'Channel' }
+  & Pick<Channel, 'id' | 'name' | 'vonage_session_id'>
+);
+
+export type GetChannelTokenQueryVariables = Exact<{
+  channelId: Scalars['uuid'];
+}>;
+
+
+export type GetChannelTokenQuery = (
+  { __typename?: 'query_root' }
+  & { getChannelToken?: Maybe<(
+    { __typename?: 'GetChannelTokenOutput' }
+    & Pick<GetChannelTokenOutput, 'token'>
+  )> }
+);
 
 export type CreateChatMutationVariables = Exact<{
   description: Scalars['String'];
@@ -5362,7 +5781,137 @@ export type UpdateCurrentUserLastSeenMutation = (
   )> }
 );
 
+export const ChannelFieldsFragmentDoc = gql`
+    fragment ChannelFields on Channel {
+  id
+  name
+  vonage_session_id
+}
+    `;
+export const CreateChannelDocument = gql`
+    mutation createChannel($name: String!) {
+  createChannel(name: $name)
+}
+    `;
+export type CreateChannelMutationFn = Apollo.MutationFunction<CreateChannelMutation, CreateChannelMutationVariables>;
 
+/**
+ * __useCreateChannelMutation__
+ *
+ * To run a mutation, you first call `useCreateChannelMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateChannelMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createChannelMutation, { data, loading, error }] = useCreateChannelMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useCreateChannelMutation(baseOptions?: Apollo.MutationHookOptions<CreateChannelMutation, CreateChannelMutationVariables>) {
+        return Apollo.useMutation<CreateChannelMutation, CreateChannelMutationVariables>(CreateChannelDocument, baseOptions);
+      }
+export type CreateChannelMutationHookResult = ReturnType<typeof useCreateChannelMutation>;
+export type CreateChannelMutationResult = Apollo.MutationResult<CreateChannelMutation>;
+export type CreateChannelMutationOptions = Apollo.BaseMutationOptions<CreateChannelMutation, CreateChannelMutationVariables>;
+export const CreateChannelSubscriptionDocument = gql`
+    subscription createChannelSubscription($jobId: uuid!) {
+  createChannel(id: $jobId) {
+    errors
+  }
+}
+    `;
+
+/**
+ * __useCreateChannelSubscriptionSubscription__
+ *
+ * To run a query within a React component, call `useCreateChannelSubscriptionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useCreateChannelSubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCreateChannelSubscriptionSubscription({
+ *   variables: {
+ *      jobId: // value for 'jobId'
+ *   },
+ * });
+ */
+export function useCreateChannelSubscriptionSubscription(baseOptions: Apollo.SubscriptionHookOptions<CreateChannelSubscriptionSubscription, CreateChannelSubscriptionSubscriptionVariables>) {
+        return Apollo.useSubscription<CreateChannelSubscriptionSubscription, CreateChannelSubscriptionSubscriptionVariables>(CreateChannelSubscriptionDocument, baseOptions);
+      }
+export type CreateChannelSubscriptionSubscriptionHookResult = ReturnType<typeof useCreateChannelSubscriptionSubscription>;
+export type CreateChannelSubscriptionSubscriptionResult = Apollo.SubscriptionResult<CreateChannelSubscriptionSubscription>;
+export const SelectChannelsDocument = gql`
+    query selectChannels {
+  Channel {
+    ...ChannelFields
+  }
+}
+    ${ChannelFieldsFragmentDoc}`;
+
+/**
+ * __useSelectChannelsQuery__
+ *
+ * To run a query within a React component, call `useSelectChannelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSelectChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSelectChannelsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSelectChannelsQuery(baseOptions?: Apollo.QueryHookOptions<SelectChannelsQuery, SelectChannelsQueryVariables>) {
+        return Apollo.useQuery<SelectChannelsQuery, SelectChannelsQueryVariables>(SelectChannelsDocument, baseOptions);
+      }
+export function useSelectChannelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SelectChannelsQuery, SelectChannelsQueryVariables>) {
+          return Apollo.useLazyQuery<SelectChannelsQuery, SelectChannelsQueryVariables>(SelectChannelsDocument, baseOptions);
+        }
+export type SelectChannelsQueryHookResult = ReturnType<typeof useSelectChannelsQuery>;
+export type SelectChannelsLazyQueryHookResult = ReturnType<typeof useSelectChannelsLazyQuery>;
+export type SelectChannelsQueryResult = Apollo.QueryResult<SelectChannelsQuery, SelectChannelsQueryVariables>;
+export const GetChannelTokenDocument = gql`
+    query getChannelToken($channelId: uuid!) {
+  getChannelToken(channelId: $channelId) {
+    token
+  }
+}
+    `;
+
+/**
+ * __useGetChannelTokenQuery__
+ *
+ * To run a query within a React component, call `useGetChannelTokenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChannelTokenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChannelTokenQuery({
+ *   variables: {
+ *      channelId: // value for 'channelId'
+ *   },
+ * });
+ */
+export function useGetChannelTokenQuery(baseOptions: Apollo.QueryHookOptions<GetChannelTokenQuery, GetChannelTokenQueryVariables>) {
+        return Apollo.useQuery<GetChannelTokenQuery, GetChannelTokenQueryVariables>(GetChannelTokenDocument, baseOptions);
+      }
+export function useGetChannelTokenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelTokenQuery, GetChannelTokenQueryVariables>) {
+          return Apollo.useLazyQuery<GetChannelTokenQuery, GetChannelTokenQueryVariables>(GetChannelTokenDocument, baseOptions);
+        }
+export type GetChannelTokenQueryHookResult = ReturnType<typeof useGetChannelTokenQuery>;
+export type GetChannelTokenLazyQueryHookResult = ReturnType<typeof useGetChannelTokenLazyQuery>;
+export type GetChannelTokenQueryResult = Apollo.QueryResult<GetChannelTokenQuery, GetChannelTokenQueryVariables>;
 export const CreateChatDocument = gql`
     mutation createChat($description: String!, $name: String!) {
   insert_Chat(objects: {description: $description, name: $name}) {

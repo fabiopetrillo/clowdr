@@ -13,6 +13,7 @@
         // Formatting
         "esbenp.prettier-vscode",
         "stkb.rewrap",
+        "shardulm94.trailing-spaces",
 
         // GraphQL
         "graphql.vscode-graphql",

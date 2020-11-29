@@ -2,10 +2,18 @@ import { gql } from "graphql-request";
 import { sdk } from "../../graphqlClient";
 import { createSession } from "../../opentok";
 
-export const createChannel = gql`
-    mutation createChannel($name: String!, $vonage_session_id: String!) {
+gql`
+    mutation createChannel(
+        $name: String!
+        $vonage_session_id: String!
+        $hls_uri: String!
+    ) {
         insert_Channel_one(
-            object: { name: $name, vonage_session_id: $vonage_session_id }
+            object: {
+                name: $name
+                vonage_session_id: $vonage_session_id
+                hls_uri: $hls_uri
+            }
         ) {
             id
         }
@@ -13,13 +21,18 @@ export const createChannel = gql`
 `;
 
 export default async function createChannelHandler(
-    name: string
+    name: string,
+    rtmpUri: string,
+    hlsUri: string
 ): Promise<CreateChannelOutput> {
     let session;
     try {
         session = await createSession({ mediaMode: "routed" });
+        if (!session?.sessionId) {
+            throw new Error("Failed to create OpenTok session");
+        }
     } catch (e) {
-        console.error("Error creating OpenTok session", e);
+        console.error("Error creating OpenTok session", JSON.stringify(e));
         throw new Error("Error creating session");
     }
 
@@ -30,6 +43,7 @@ export default async function createChannelHandler(
     const result = await sdk.createChannel({
         name,
         vonage_session_id: session.sessionId,
+        hls_uri: hlsUri,
     });
     if (result.insert_Channel_one?.id) {
         return {

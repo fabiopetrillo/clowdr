@@ -33,6 +33,7 @@ export type Boolean_Comparison_Exp = {
 export type Channel = {
   __typename?: 'Channel';
   created_at: Scalars['timestamptz'];
+  hls_uri?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   name: Scalars['String'];
   updated_at: Scalars['timestamptz'];
@@ -80,6 +81,7 @@ export type Channel_Bool_Exp = {
   _not?: Maybe<Channel_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Channel_Bool_Exp>>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  hls_uri?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
@@ -95,6 +97,7 @@ export enum Channel_Constraint {
 /** input type for inserting data into table "Channel" */
 export type Channel_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
+  hls_uri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -105,6 +108,7 @@ export type Channel_Insert_Input = {
 export type Channel_Max_Fields = {
   __typename?: 'Channel_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
+  hls_uri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -114,6 +118,7 @@ export type Channel_Max_Fields = {
 /** order by max() on columns of table "Channel" */
 export type Channel_Max_Order_By = {
   created_at?: Maybe<Order_By>;
+  hls_uri?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -124,6 +129,7 @@ export type Channel_Max_Order_By = {
 export type Channel_Min_Fields = {
   __typename?: 'Channel_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
+  hls_uri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -133,6 +139,7 @@ export type Channel_Min_Fields = {
 /** order by min() on columns of table "Channel" */
 export type Channel_Min_Order_By = {
   created_at?: Maybe<Order_By>;
+  hls_uri?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -164,6 +171,7 @@ export type Channel_On_Conflict = {
 /** ordering options when selecting data from "Channel" */
 export type Channel_Order_By = {
   created_at?: Maybe<Order_By>;
+  hls_uri?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -180,6 +188,8 @@ export enum Channel_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  HlsUri = 'hls_uri',
+  /** column name */
   Id = 'id',
   /** column name */
   Name = 'name',
@@ -192,6 +202,7 @@ export enum Channel_Select_Column {
 /** input type for updating data in table "Channel" */
 export type Channel_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
+  hls_uri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -202,6 +213,8 @@ export type Channel_Set_Input = {
 export enum Channel_Update_Column {
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  HlsUri = 'hls_uri',
   /** column name */
   Id = 'id',
   /** column name */
@@ -3105,6 +3118,545 @@ export type String_Comparison_Exp = {
   _similar?: Maybe<Scalars['String']>;
 };
 
+/** columns and relationships of "User" */
+export type User = {
+  __typename?: 'User';
+  /** An array relationship */
+  chats: Array<Chat>;
+  /** An aggregated array relationship */
+  chats_aggregate: Chat_Aggregate;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  firstName: Scalars['String'];
+  /** An array relationship */
+  flaggedMessages: Array<FlaggedChatMessage>;
+  /** An aggregated array relationship */
+  flaggedMessages_aggregate: FlaggedChatMessage_Aggregate;
+  /** An array relationship */
+  followedChats: Array<FollowedChat>;
+  /** An aggregated array relationship */
+  followedChats_aggregate: FollowedChat_Aggregate;
+  id: Scalars['String'];
+  lastLoggedInAt?: Maybe<Scalars['timestamptz']>;
+  lastName: Scalars['String'];
+  /** An array relationship */
+  memberOfChats: Array<ChatMember>;
+  /** An aggregated array relationship */
+  memberOfChats_aggregate: ChatMember_Aggregate;
+  /** An array relationship */
+  moderatorOfChats: Array<ChatModerator>;
+  /** An aggregated array relationship */
+  moderatorOfChats_aggregate: ChatModerator_Aggregate;
+  /** An object relationship */
+  onlineStatus?: Maybe<OnlineStatus>;
+  /** An array relationship */
+  pinnedChats: Array<PinnedChat>;
+  /** An aggregated array relationship */
+  pinnedChats_aggregate: PinnedChat_Aggregate;
+  /** An array relationship */
+  reactions: Array<ChatReaction>;
+  /** An aggregated array relationship */
+  reactions_aggregate: ChatReaction_Aggregate;
+  /** An array relationship */
+  sentMessages: Array<ChatMessage>;
+  /** An aggregated array relationship */
+  sentMessages_aggregate: ChatMessage_Aggregate;
+  status: Scalars['String'];
+  /** An array relationship */
+  typingInChats: Array<ChatTyper>;
+  /** An aggregated array relationship */
+  typingInChats_aggregate: ChatTyper_Aggregate;
+  /** An array relationship */
+  unreadIndices: Array<ChatUnreadIndex>;
+  /** An aggregated array relationship */
+  unreadIndices_aggregate: ChatUnreadIndex_Aggregate;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  /** An array relationship */
+  viewingChats: Array<ChatViewer>;
+  /** An aggregated array relationship */
+  viewingChats_aggregate: ChatViewer_Aggregate;
+};
+
+
+/** columns and relationships of "User" */
+export type UserChatsArgs = {
+  distinct_on?: Maybe<Array<Chat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Order_By>>;
+  where?: Maybe<Chat_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserChats_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Order_By>>;
+  where?: Maybe<Chat_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserFlaggedMessagesArgs = {
+  distinct_on?: Maybe<Array<FlaggedChatMessage_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<FlaggedChatMessage_Order_By>>;
+  where?: Maybe<FlaggedChatMessage_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserFlaggedMessages_AggregateArgs = {
+  distinct_on?: Maybe<Array<FlaggedChatMessage_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<FlaggedChatMessage_Order_By>>;
+  where?: Maybe<FlaggedChatMessage_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserFollowedChatsArgs = {
+  distinct_on?: Maybe<Array<FollowedChat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<FollowedChat_Order_By>>;
+  where?: Maybe<FollowedChat_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserFollowedChats_AggregateArgs = {
+  distinct_on?: Maybe<Array<FollowedChat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<FollowedChat_Order_By>>;
+  where?: Maybe<FollowedChat_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserMemberOfChatsArgs = {
+  distinct_on?: Maybe<Array<ChatMember_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatMember_Order_By>>;
+  where?: Maybe<ChatMember_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserMemberOfChats_AggregateArgs = {
+  distinct_on?: Maybe<Array<ChatMember_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatMember_Order_By>>;
+  where?: Maybe<ChatMember_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserModeratorOfChatsArgs = {
+  distinct_on?: Maybe<Array<ChatModerator_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatModerator_Order_By>>;
+  where?: Maybe<ChatModerator_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserModeratorOfChats_AggregateArgs = {
+  distinct_on?: Maybe<Array<ChatModerator_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatModerator_Order_By>>;
+  where?: Maybe<ChatModerator_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserPinnedChatsArgs = {
+  distinct_on?: Maybe<Array<PinnedChat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<PinnedChat_Order_By>>;
+  where?: Maybe<PinnedChat_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserPinnedChats_AggregateArgs = {
+  distinct_on?: Maybe<Array<PinnedChat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<PinnedChat_Order_By>>;
+  where?: Maybe<PinnedChat_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserReactionsArgs = {
+  distinct_on?: Maybe<Array<ChatReaction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatReaction_Order_By>>;
+  where?: Maybe<ChatReaction_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserReactions_AggregateArgs = {
+  distinct_on?: Maybe<Array<ChatReaction_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatReaction_Order_By>>;
+  where?: Maybe<ChatReaction_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserSentMessagesArgs = {
+  distinct_on?: Maybe<Array<ChatMessage_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatMessage_Order_By>>;
+  where?: Maybe<ChatMessage_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserSentMessages_AggregateArgs = {
+  distinct_on?: Maybe<Array<ChatMessage_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatMessage_Order_By>>;
+  where?: Maybe<ChatMessage_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserTypingInChatsArgs = {
+  distinct_on?: Maybe<Array<ChatTyper_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatTyper_Order_By>>;
+  where?: Maybe<ChatTyper_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserTypingInChats_AggregateArgs = {
+  distinct_on?: Maybe<Array<ChatTyper_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatTyper_Order_By>>;
+  where?: Maybe<ChatTyper_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserUnreadIndicesArgs = {
+  distinct_on?: Maybe<Array<ChatUnreadIndex_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatUnreadIndex_Order_By>>;
+  where?: Maybe<ChatUnreadIndex_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserUnreadIndices_AggregateArgs = {
+  distinct_on?: Maybe<Array<ChatUnreadIndex_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatUnreadIndex_Order_By>>;
+  where?: Maybe<ChatUnreadIndex_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserViewingChatsArgs = {
+  distinct_on?: Maybe<Array<ChatViewer_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatViewer_Order_By>>;
+  where?: Maybe<ChatViewer_Bool_Exp>;
+};
+
+
+/** columns and relationships of "User" */
+export type UserViewingChats_AggregateArgs = {
+  distinct_on?: Maybe<Array<ChatViewer_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<ChatViewer_Order_By>>;
+  where?: Maybe<ChatViewer_Bool_Exp>;
+};
+
+/** aggregated selection of "User" */
+export type User_Aggregate = {
+  __typename?: 'User_aggregate';
+  aggregate?: Maybe<User_Aggregate_Fields>;
+  nodes: Array<User>;
+};
+
+/** aggregate fields of "User" */
+export type User_Aggregate_Fields = {
+  __typename?: 'User_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<User_Max_Fields>;
+  min?: Maybe<User_Min_Fields>;
+};
+
+
+/** aggregate fields of "User" */
+export type User_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<User_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "User" */
+export type User_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<User_Max_Order_By>;
+  min?: Maybe<User_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "User" */
+export type User_Arr_Rel_Insert_Input = {
+  data: Array<User_Insert_Input>;
+  on_conflict?: Maybe<User_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "User". All fields are combined with a logical 'AND'. */
+export type User_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<User_Bool_Exp>>>;
+  _not?: Maybe<User_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<User_Bool_Exp>>>;
+  chats?: Maybe<Chat_Bool_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  email?: Maybe<String_Comparison_Exp>;
+  firstName?: Maybe<String_Comparison_Exp>;
+  flaggedMessages?: Maybe<FlaggedChatMessage_Bool_Exp>;
+  followedChats?: Maybe<FollowedChat_Bool_Exp>;
+  id?: Maybe<String_Comparison_Exp>;
+  lastLoggedInAt?: Maybe<Timestamptz_Comparison_Exp>;
+  lastName?: Maybe<String_Comparison_Exp>;
+  memberOfChats?: Maybe<ChatMember_Bool_Exp>;
+  moderatorOfChats?: Maybe<ChatModerator_Bool_Exp>;
+  onlineStatus?: Maybe<OnlineStatus_Bool_Exp>;
+  pinnedChats?: Maybe<PinnedChat_Bool_Exp>;
+  reactions?: Maybe<ChatReaction_Bool_Exp>;
+  sentMessages?: Maybe<ChatMessage_Bool_Exp>;
+  status?: Maybe<String_Comparison_Exp>;
+  typingInChats?: Maybe<ChatTyper_Bool_Exp>;
+  unreadIndices?: Maybe<ChatUnreadIndex_Bool_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  viewingChats?: Maybe<ChatViewer_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "User" */
+export enum User_Constraint {
+  /** unique or primary key constraint */
+  UserEmailKey = 'user_email_key',
+  /** unique or primary key constraint */
+  UserPkey = 'user_pkey'
+}
+
+/** input type for inserting data into table "User" */
+export type User_Insert_Input = {
+  chats?: Maybe<Chat_Arr_Rel_Insert_Input>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  flaggedMessages?: Maybe<FlaggedChatMessage_Arr_Rel_Insert_Input>;
+  followedChats?: Maybe<FollowedChat_Arr_Rel_Insert_Input>;
+  id?: Maybe<Scalars['String']>;
+  lastLoggedInAt?: Maybe<Scalars['timestamptz']>;
+  lastName?: Maybe<Scalars['String']>;
+  memberOfChats?: Maybe<ChatMember_Arr_Rel_Insert_Input>;
+  moderatorOfChats?: Maybe<ChatModerator_Arr_Rel_Insert_Input>;
+  onlineStatus?: Maybe<OnlineStatus_Obj_Rel_Insert_Input>;
+  pinnedChats?: Maybe<PinnedChat_Arr_Rel_Insert_Input>;
+  reactions?: Maybe<ChatReaction_Arr_Rel_Insert_Input>;
+  sentMessages?: Maybe<ChatMessage_Arr_Rel_Insert_Input>;
+  status?: Maybe<Scalars['String']>;
+  typingInChats?: Maybe<ChatTyper_Arr_Rel_Insert_Input>;
+  unreadIndices?: Maybe<ChatUnreadIndex_Arr_Rel_Insert_Input>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  viewingChats?: Maybe<ChatViewer_Arr_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type User_Max_Fields = {
+  __typename?: 'User_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  lastLoggedInAt?: Maybe<Scalars['timestamptz']>;
+  lastName?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "User" */
+export type User_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  firstName?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  lastLoggedInAt?: Maybe<Order_By>;
+  lastName?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type User_Min_Fields = {
+  __typename?: 'User_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  lastLoggedInAt?: Maybe<Scalars['timestamptz']>;
+  lastName?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "User" */
+export type User_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  firstName?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  lastLoggedInAt?: Maybe<Order_By>;
+  lastName?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "User" */
+export type User_Mutation_Response = {
+  __typename?: 'User_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<User>;
+};
+
+/** input type for inserting object relation for remote table "User" */
+export type User_Obj_Rel_Insert_Input = {
+  data: User_Insert_Input;
+  on_conflict?: Maybe<User_On_Conflict>;
+};
+
+/** on conflict condition type for table "User" */
+export type User_On_Conflict = {
+  constraint: User_Constraint;
+  update_columns: Array<User_Update_Column>;
+  where?: Maybe<User_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "User" */
+export type User_Order_By = {
+  chats_aggregate?: Maybe<Chat_Aggregate_Order_By>;
+  created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  firstName?: Maybe<Order_By>;
+  flaggedMessages_aggregate?: Maybe<FlaggedChatMessage_Aggregate_Order_By>;
+  followedChats_aggregate?: Maybe<FollowedChat_Aggregate_Order_By>;
+  id?: Maybe<Order_By>;
+  lastLoggedInAt?: Maybe<Order_By>;
+  lastName?: Maybe<Order_By>;
+  memberOfChats_aggregate?: Maybe<ChatMember_Aggregate_Order_By>;
+  moderatorOfChats_aggregate?: Maybe<ChatModerator_Aggregate_Order_By>;
+  onlineStatus?: Maybe<OnlineStatus_Order_By>;
+  pinnedChats_aggregate?: Maybe<PinnedChat_Aggregate_Order_By>;
+  reactions_aggregate?: Maybe<ChatReaction_Aggregate_Order_By>;
+  sentMessages_aggregate?: Maybe<ChatMessage_Aggregate_Order_By>;
+  status?: Maybe<Order_By>;
+  typingInChats_aggregate?: Maybe<ChatTyper_Aggregate_Order_By>;
+  unreadIndices_aggregate?: Maybe<ChatUnreadIndex_Aggregate_Order_By>;
+  updated_at?: Maybe<Order_By>;
+  viewingChats_aggregate?: Maybe<ChatViewer_Aggregate_Order_By>;
+};
+
+/** primary key columns input for table: "User" */
+export type User_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "User" */
+export enum User_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Email = 'email',
+  /** column name */
+  FirstName = 'firstName',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LastLoggedInAt = 'lastLoggedInAt',
+  /** column name */
+  LastName = 'lastName',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "User" */
+export type User_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  lastLoggedInAt?: Maybe<Scalars['timestamptz']>;
+  lastName?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "User" */
+export enum User_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Email = 'email',
+  /** column name */
+  FirstName = 'firstName',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LastLoggedInAt = 'lastLoggedInAt',
+  /** column name */
+  LastName = 'lastName',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** fields of action: "createChannel" */
+export type CreateChannel = {
+  __typename?: 'createChannel';
+  /** the time at which this action was created */
+  created_at?: Maybe<Scalars['timestamptz']>;
+  /** errors related to the invocation */
+  errors?: Maybe<Scalars['json']>;
+  /** the unique id of an action */
+  id?: Maybe<Scalars['uuid']>;
+  /** the output fields of this action */
+  output?: Maybe<CreateChannelOutput>;
+};
+
 
 /** expression to compare columns of type json. All fields are combined with logical 'AND'. */
 export type Json_Comparison_Exp = {
@@ -3147,7 +3699,7 @@ export type Jsonb_Comparison_Exp = {
 export type Mutation_Root = {
   __typename?: 'mutation_root';
   /** perform the action: "createChannel" */
-  createChannel?: Maybe<CreateChannelOutput>;
+  createChannel: Scalars['uuid'];
   /** delete data from the table: "Channel" */
   delete_Channel?: Maybe<Channel_Mutation_Response>;
   /** delete single row from the table: "Channel" */
@@ -3200,10 +3752,10 @@ export type Mutation_Root = {
   delete_PinnedChat?: Maybe<PinnedChat_Mutation_Response>;
   /** delete single row from the table: "PinnedChat" */
   delete_PinnedChat_by_pk?: Maybe<PinnedChat>;
-  /** delete data from the table: "user" */
-  delete_user?: Maybe<User_Mutation_Response>;
-  /** delete single row from the table: "user" */
-  delete_user_by_pk?: Maybe<User>;
+  /** delete data from the table: "User" */
+  delete_User?: Maybe<User_Mutation_Response>;
+  /** delete single row from the table: "User" */
+  delete_User_by_pk?: Maybe<User>;
   /** insert data into the table: "Channel" */
   insert_Channel?: Maybe<Channel_Mutation_Response>;
   /** insert a single row into the table: "Channel" */
@@ -3256,10 +3808,10 @@ export type Mutation_Root = {
   insert_PinnedChat?: Maybe<PinnedChat_Mutation_Response>;
   /** insert a single row into the table: "PinnedChat" */
   insert_PinnedChat_one?: Maybe<PinnedChat>;
-  /** insert data into the table: "user" */
-  insert_user?: Maybe<User_Mutation_Response>;
-  /** insert a single row into the table: "user" */
-  insert_user_one?: Maybe<User>;
+  /** insert data into the table: "User" */
+  insert_User?: Maybe<User_Mutation_Response>;
+  /** insert a single row into the table: "User" */
+  insert_User_one?: Maybe<User>;
   /** update data of the table: "Channel" */
   update_Channel?: Maybe<Channel_Mutation_Response>;
   /** update single row of the table: "Channel" */
@@ -3312,10 +3864,10 @@ export type Mutation_Root = {
   update_PinnedChat?: Maybe<PinnedChat_Mutation_Response>;
   /** update single row of the table: "PinnedChat" */
   update_PinnedChat_by_pk?: Maybe<PinnedChat>;
-  /** update data of the table: "user" */
-  update_user?: Maybe<User_Mutation_Response>;
-  /** update single row of the table: "user" */
-  update_user_by_pk?: Maybe<User>;
+  /** update data of the table: "User" */
+  update_User?: Maybe<User_Mutation_Response>;
+  /** update single row of the table: "User" */
+  update_User_by_pk?: Maybe<User>;
 };
 
 
@@ -3995,18 +4547,20 @@ export type Query_Root = {
   PinnedChat_aggregate: PinnedChat_Aggregate;
   /** fetch data from the table: "PinnedChat" using primary key columns */
   PinnedChat_by_pk?: Maybe<PinnedChat>;
+  /** fetch data from the table: "User" */
+  User: Array<User>;
+  /** fetch aggregated fields from the table: "User" */
+  User_aggregate: User_Aggregate;
+  /** fetch data from the table: "User" using primary key columns */
+  User_by_pk?: Maybe<User>;
+  /** retrieve the result of action: "createChannel" */
+  createChannel?: Maybe<CreateChannel>;
   /** perform the action: "echo" */
   echo?: Maybe<EchoOutput>;
   /** perform the action: "getChannelToken" */
   getChannelToken?: Maybe<GetChannelTokenOutput>;
   /** perform the action: "protectedEcho" */
   protectedEcho?: Maybe<ProtectedEchoOutput>;
-  /** fetch data from the table: "user" */
-  user: Array<User>;
-  /** fetch aggregated fields from the table: "user" */
-  user_aggregate: User_Aggregate;
-  /** fetch data from the table: "user" using primary key columns */
-  user_by_pk?: Maybe<User>;
 };
 
 
@@ -4349,24 +4903,6 @@ export type Query_RootPinnedChat_By_PkArgs = {
 
 
 /** query root */
-export type Query_RootEchoArgs = {
-  message: Scalars['String'];
-};
-
-
-/** query root */
-export type Query_RootGetChannelTokenArgs = {
-  channelId: Scalars['uuid'];
-};
-
-
-/** query root */
-export type Query_RootProtectedEchoArgs = {
-  message: Scalars['String'];
-};
-
-
-/** query root */
 export type Query_RootUserArgs = {
   distinct_on?: Maybe<Array<User_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4389,6 +4925,30 @@ export type Query_RootUser_AggregateArgs = {
 /** query root */
 export type Query_RootUser_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+/** query root */
+export type Query_RootCreateChannelArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootEchoArgs = {
+  message: Scalars['String'];
+};
+
+
+/** query root */
+export type Query_RootGetChannelTokenArgs = {
+  channelId: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootProtectedEchoArgs = {
+  message: Scalars['String'];
 };
 
 /** subscription root */
@@ -4472,18 +5032,20 @@ export type Subscription_Root = {
   PinnedChat_aggregate: PinnedChat_Aggregate;
   /** fetch data from the table: "PinnedChat" using primary key columns */
   PinnedChat_by_pk?: Maybe<PinnedChat>;
+  /** fetch data from the table: "User" */
+  User: Array<User>;
+  /** fetch aggregated fields from the table: "User" */
+  User_aggregate: User_Aggregate;
+  /** fetch data from the table: "User" using primary key columns */
+  User_by_pk?: Maybe<User>;
+  /** retrieve the result of action: "createChannel" */
+  createChannel?: Maybe<CreateChannel>;
   /** perform the action: "echo" */
   echo?: Maybe<EchoOutput>;
   /** perform the action: "getChannelToken" */
   getChannelToken?: Maybe<GetChannelTokenOutput>;
   /** perform the action: "protectedEcho" */
   protectedEcho?: Maybe<ProtectedEchoOutput>;
-  /** fetch data from the table: "user" */
-  user: Array<User>;
-  /** fetch aggregated fields from the table: "user" */
-  user_aggregate: User_Aggregate;
-  /** fetch data from the table: "user" using primary key columns */
-  user_by_pk?: Maybe<User>;
 };
 
 
@@ -4826,24 +5388,6 @@ export type Subscription_RootPinnedChat_By_PkArgs = {
 
 
 /** subscription root */
-export type Subscription_RootEchoArgs = {
-  message: Scalars['String'];
-};
-
-
-/** subscription root */
-export type Subscription_RootGetChannelTokenArgs = {
-  channelId: Scalars['uuid'];
-};
-
-
-/** subscription root */
-export type Subscription_RootProtectedEchoArgs = {
-  message: Scalars['String'];
-};
-
-
-/** subscription root */
 export type Subscription_RootUserArgs = {
   distinct_on?: Maybe<Array<User_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4869,6 +5413,30 @@ export type Subscription_RootUser_By_PkArgs = {
 };
 
 
+/** subscription root */
+export type Subscription_RootCreateChannelArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootEchoArgs = {
+  message: Scalars['String'];
+};
+
+
+/** subscription root */
+export type Subscription_RootGetChannelTokenArgs = {
+  channelId: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootProtectedEchoArgs = {
+  message: Scalars['String'];
+};
+
+
 /** expression to compare columns of type timestamptz. All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: Maybe<Scalars['timestamptz']>;
@@ -4881,530 +5449,6 @@ export type Timestamptz_Comparison_Exp = {
   _neq?: Maybe<Scalars['timestamptz']>;
   _nin?: Maybe<Array<Scalars['timestamptz']>>;
 };
-
-/** columns and relationships of "user" */
-export type User = {
-  __typename?: 'user';
-  /** An array relationship */
-  chats: Array<Chat>;
-  /** An aggregated array relationship */
-  chats_aggregate: Chat_Aggregate;
-  created_at?: Maybe<Scalars['timestamptz']>;
-  email?: Maybe<Scalars['String']>;
-  firstName: Scalars['String'];
-  /** An array relationship */
-  flaggedMessages: Array<FlaggedChatMessage>;
-  /** An aggregated array relationship */
-  flaggedMessages_aggregate: FlaggedChatMessage_Aggregate;
-  /** An array relationship */
-  followedChats: Array<FollowedChat>;
-  /** An aggregated array relationship */
-  followedChats_aggregate: FollowedChat_Aggregate;
-  id: Scalars['String'];
-  lastLoggedInAt?: Maybe<Scalars['timestamptz']>;
-  lastName: Scalars['String'];
-  /** An array relationship */
-  memberOfChats: Array<ChatMember>;
-  /** An aggregated array relationship */
-  memberOfChats_aggregate: ChatMember_Aggregate;
-  /** An array relationship */
-  moderatorOfChats: Array<ChatModerator>;
-  /** An aggregated array relationship */
-  moderatorOfChats_aggregate: ChatModerator_Aggregate;
-  /** An object relationship */
-  onlineStatus?: Maybe<OnlineStatus>;
-  /** An array relationship */
-  pinnedChats: Array<PinnedChat>;
-  /** An aggregated array relationship */
-  pinnedChats_aggregate: PinnedChat_Aggregate;
-  /** An array relationship */
-  reactions: Array<ChatReaction>;
-  /** An aggregated array relationship */
-  reactions_aggregate: ChatReaction_Aggregate;
-  /** An array relationship */
-  sentMessages: Array<ChatMessage>;
-  /** An aggregated array relationship */
-  sentMessages_aggregate: ChatMessage_Aggregate;
-  /** An array relationship */
-  typingInChats: Array<ChatTyper>;
-  /** An aggregated array relationship */
-  typingInChats_aggregate: ChatTyper_Aggregate;
-  /** An array relationship */
-  unreadIndices: Array<ChatUnreadIndex>;
-  /** An aggregated array relationship */
-  unreadIndices_aggregate: ChatUnreadIndex_Aggregate;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  username?: Maybe<Scalars['String']>;
-  /** An array relationship */
-  viewingChats: Array<ChatViewer>;
-  /** An aggregated array relationship */
-  viewingChats_aggregate: ChatViewer_Aggregate;
-};
-
-
-/** columns and relationships of "user" */
-export type UserChatsArgs = {
-  distinct_on?: Maybe<Array<Chat_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Chat_Order_By>>;
-  where?: Maybe<Chat_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserChats_AggregateArgs = {
-  distinct_on?: Maybe<Array<Chat_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Chat_Order_By>>;
-  where?: Maybe<Chat_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserFlaggedMessagesArgs = {
-  distinct_on?: Maybe<Array<FlaggedChatMessage_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<FlaggedChatMessage_Order_By>>;
-  where?: Maybe<FlaggedChatMessage_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserFlaggedMessages_AggregateArgs = {
-  distinct_on?: Maybe<Array<FlaggedChatMessage_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<FlaggedChatMessage_Order_By>>;
-  where?: Maybe<FlaggedChatMessage_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserFollowedChatsArgs = {
-  distinct_on?: Maybe<Array<FollowedChat_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<FollowedChat_Order_By>>;
-  where?: Maybe<FollowedChat_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserFollowedChats_AggregateArgs = {
-  distinct_on?: Maybe<Array<FollowedChat_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<FollowedChat_Order_By>>;
-  where?: Maybe<FollowedChat_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserMemberOfChatsArgs = {
-  distinct_on?: Maybe<Array<ChatMember_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatMember_Order_By>>;
-  where?: Maybe<ChatMember_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserMemberOfChats_AggregateArgs = {
-  distinct_on?: Maybe<Array<ChatMember_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatMember_Order_By>>;
-  where?: Maybe<ChatMember_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserModeratorOfChatsArgs = {
-  distinct_on?: Maybe<Array<ChatModerator_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatModerator_Order_By>>;
-  where?: Maybe<ChatModerator_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserModeratorOfChats_AggregateArgs = {
-  distinct_on?: Maybe<Array<ChatModerator_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatModerator_Order_By>>;
-  where?: Maybe<ChatModerator_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserPinnedChatsArgs = {
-  distinct_on?: Maybe<Array<PinnedChat_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<PinnedChat_Order_By>>;
-  where?: Maybe<PinnedChat_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserPinnedChats_AggregateArgs = {
-  distinct_on?: Maybe<Array<PinnedChat_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<PinnedChat_Order_By>>;
-  where?: Maybe<PinnedChat_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserReactionsArgs = {
-  distinct_on?: Maybe<Array<ChatReaction_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatReaction_Order_By>>;
-  where?: Maybe<ChatReaction_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserReactions_AggregateArgs = {
-  distinct_on?: Maybe<Array<ChatReaction_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatReaction_Order_By>>;
-  where?: Maybe<ChatReaction_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserSentMessagesArgs = {
-  distinct_on?: Maybe<Array<ChatMessage_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatMessage_Order_By>>;
-  where?: Maybe<ChatMessage_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserSentMessages_AggregateArgs = {
-  distinct_on?: Maybe<Array<ChatMessage_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatMessage_Order_By>>;
-  where?: Maybe<ChatMessage_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserTypingInChatsArgs = {
-  distinct_on?: Maybe<Array<ChatTyper_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatTyper_Order_By>>;
-  where?: Maybe<ChatTyper_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserTypingInChats_AggregateArgs = {
-  distinct_on?: Maybe<Array<ChatTyper_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatTyper_Order_By>>;
-  where?: Maybe<ChatTyper_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserUnreadIndicesArgs = {
-  distinct_on?: Maybe<Array<ChatUnreadIndex_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatUnreadIndex_Order_By>>;
-  where?: Maybe<ChatUnreadIndex_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserUnreadIndices_AggregateArgs = {
-  distinct_on?: Maybe<Array<ChatUnreadIndex_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatUnreadIndex_Order_By>>;
-  where?: Maybe<ChatUnreadIndex_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserViewingChatsArgs = {
-  distinct_on?: Maybe<Array<ChatViewer_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatViewer_Order_By>>;
-  where?: Maybe<ChatViewer_Bool_Exp>;
-};
-
-
-/** columns and relationships of "user" */
-export type UserViewingChats_AggregateArgs = {
-  distinct_on?: Maybe<Array<ChatViewer_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<ChatViewer_Order_By>>;
-  where?: Maybe<ChatViewer_Bool_Exp>;
-};
-
-/** aggregated selection of "user" */
-export type User_Aggregate = {
-  __typename?: 'user_aggregate';
-  aggregate?: Maybe<User_Aggregate_Fields>;
-  nodes: Array<User>;
-};
-
-/** aggregate fields of "user" */
-export type User_Aggregate_Fields = {
-  __typename?: 'user_aggregate_fields';
-  count?: Maybe<Scalars['Int']>;
-  max?: Maybe<User_Max_Fields>;
-  min?: Maybe<User_Min_Fields>;
-};
-
-
-/** aggregate fields of "user" */
-export type User_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<User_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** order by aggregate values of table "user" */
-export type User_Aggregate_Order_By = {
-  count?: Maybe<Order_By>;
-  max?: Maybe<User_Max_Order_By>;
-  min?: Maybe<User_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "user" */
-export type User_Arr_Rel_Insert_Input = {
-  data: Array<User_Insert_Input>;
-  on_conflict?: Maybe<User_On_Conflict>;
-};
-
-/** Boolean expression to filter rows from the table "user". All fields are combined with a logical 'AND'. */
-export type User_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<User_Bool_Exp>>>;
-  _not?: Maybe<User_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<User_Bool_Exp>>>;
-  chats?: Maybe<Chat_Bool_Exp>;
-  created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  email?: Maybe<String_Comparison_Exp>;
-  firstName?: Maybe<String_Comparison_Exp>;
-  flaggedMessages?: Maybe<FlaggedChatMessage_Bool_Exp>;
-  followedChats?: Maybe<FollowedChat_Bool_Exp>;
-  id?: Maybe<String_Comparison_Exp>;
-  lastLoggedInAt?: Maybe<Timestamptz_Comparison_Exp>;
-  lastName?: Maybe<String_Comparison_Exp>;
-  memberOfChats?: Maybe<ChatMember_Bool_Exp>;
-  moderatorOfChats?: Maybe<ChatModerator_Bool_Exp>;
-  onlineStatus?: Maybe<OnlineStatus_Bool_Exp>;
-  pinnedChats?: Maybe<PinnedChat_Bool_Exp>;
-  reactions?: Maybe<ChatReaction_Bool_Exp>;
-  sentMessages?: Maybe<ChatMessage_Bool_Exp>;
-  typingInChats?: Maybe<ChatTyper_Bool_Exp>;
-  unreadIndices?: Maybe<ChatUnreadIndex_Bool_Exp>;
-  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
-  username?: Maybe<String_Comparison_Exp>;
-  viewingChats?: Maybe<ChatViewer_Bool_Exp>;
-};
-
-/** unique or primary key constraints on table "user" */
-export enum User_Constraint {
-  /** unique or primary key constraint */
-  UserPkey = 'user_pkey'
-}
-
-/** input type for inserting data into table "user" */
-export type User_Insert_Input = {
-  chats?: Maybe<Chat_Arr_Rel_Insert_Input>;
-  created_at?: Maybe<Scalars['timestamptz']>;
-  email?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  flaggedMessages?: Maybe<FlaggedChatMessage_Arr_Rel_Insert_Input>;
-  followedChats?: Maybe<FollowedChat_Arr_Rel_Insert_Input>;
-  id?: Maybe<Scalars['String']>;
-  lastLoggedInAt?: Maybe<Scalars['timestamptz']>;
-  lastName?: Maybe<Scalars['String']>;
-  memberOfChats?: Maybe<ChatMember_Arr_Rel_Insert_Input>;
-  moderatorOfChats?: Maybe<ChatModerator_Arr_Rel_Insert_Input>;
-  onlineStatus?: Maybe<OnlineStatus_Obj_Rel_Insert_Input>;
-  pinnedChats?: Maybe<PinnedChat_Arr_Rel_Insert_Input>;
-  reactions?: Maybe<ChatReaction_Arr_Rel_Insert_Input>;
-  sentMessages?: Maybe<ChatMessage_Arr_Rel_Insert_Input>;
-  typingInChats?: Maybe<ChatTyper_Arr_Rel_Insert_Input>;
-  unreadIndices?: Maybe<ChatUnreadIndex_Arr_Rel_Insert_Input>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  username?: Maybe<Scalars['String']>;
-  viewingChats?: Maybe<ChatViewer_Arr_Rel_Insert_Input>;
-};
-
-/** aggregate max on columns */
-export type User_Max_Fields = {
-  __typename?: 'user_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  email?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  lastLoggedInAt?: Maybe<Scalars['timestamptz']>;
-  lastName?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  username?: Maybe<Scalars['String']>;
-};
-
-/** order by max() on columns of table "user" */
-export type User_Max_Order_By = {
-  created_at?: Maybe<Order_By>;
-  email?: Maybe<Order_By>;
-  firstName?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  lastLoggedInAt?: Maybe<Order_By>;
-  lastName?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-  username?: Maybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type User_Min_Fields = {
-  __typename?: 'user_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  email?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  lastLoggedInAt?: Maybe<Scalars['timestamptz']>;
-  lastName?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  username?: Maybe<Scalars['String']>;
-};
-
-/** order by min() on columns of table "user" */
-export type User_Min_Order_By = {
-  created_at?: Maybe<Order_By>;
-  email?: Maybe<Order_By>;
-  firstName?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  lastLoggedInAt?: Maybe<Order_By>;
-  lastName?: Maybe<Order_By>;
-  updated_at?: Maybe<Order_By>;
-  username?: Maybe<Order_By>;
-};
-
-/** response of any mutation on the table "user" */
-export type User_Mutation_Response = {
-  __typename?: 'user_mutation_response';
-  /** number of affected rows by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
-  returning: Array<User>;
-};
-
-/** input type for inserting object relation for remote table "user" */
-export type User_Obj_Rel_Insert_Input = {
-  data: User_Insert_Input;
-  on_conflict?: Maybe<User_On_Conflict>;
-};
-
-/** on conflict condition type for table "user" */
-export type User_On_Conflict = {
-  constraint: User_Constraint;
-  update_columns: Array<User_Update_Column>;
-  where?: Maybe<User_Bool_Exp>;
-};
-
-/** ordering options when selecting data from "user" */
-export type User_Order_By = {
-  chats_aggregate?: Maybe<Chat_Aggregate_Order_By>;
-  created_at?: Maybe<Order_By>;
-  email?: Maybe<Order_By>;
-  firstName?: Maybe<Order_By>;
-  flaggedMessages_aggregate?: Maybe<FlaggedChatMessage_Aggregate_Order_By>;
-  followedChats_aggregate?: Maybe<FollowedChat_Aggregate_Order_By>;
-  id?: Maybe<Order_By>;
-  lastLoggedInAt?: Maybe<Order_By>;
-  lastName?: Maybe<Order_By>;
-  memberOfChats_aggregate?: Maybe<ChatMember_Aggregate_Order_By>;
-  moderatorOfChats_aggregate?: Maybe<ChatModerator_Aggregate_Order_By>;
-  onlineStatus?: Maybe<OnlineStatus_Order_By>;
-  pinnedChats_aggregate?: Maybe<PinnedChat_Aggregate_Order_By>;
-  reactions_aggregate?: Maybe<ChatReaction_Aggregate_Order_By>;
-  sentMessages_aggregate?: Maybe<ChatMessage_Aggregate_Order_By>;
-  typingInChats_aggregate?: Maybe<ChatTyper_Aggregate_Order_By>;
-  unreadIndices_aggregate?: Maybe<ChatUnreadIndex_Aggregate_Order_By>;
-  updated_at?: Maybe<Order_By>;
-  username?: Maybe<Order_By>;
-  viewingChats_aggregate?: Maybe<ChatViewer_Aggregate_Order_By>;
-};
-
-/** primary key columns input for table: "user" */
-export type User_Pk_Columns_Input = {
-  id: Scalars['String'];
-};
-
-/** select columns of table "user" */
-export enum User_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Email = 'email',
-  /** column name */
-  FirstName = 'firstName',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  LastLoggedInAt = 'lastLoggedInAt',
-  /** column name */
-  LastName = 'lastName',
-  /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
-  Username = 'username'
-}
-
-/** input type for updating data in table "user" */
-export type User_Set_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
-  email?: Maybe<Scalars['String']>;
-  firstName?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  lastLoggedInAt?: Maybe<Scalars['timestamptz']>;
-  lastName?: Maybe<Scalars['String']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  username?: Maybe<Scalars['String']>;
-};
-
-/** update columns of table "user" */
-export enum User_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Email = 'email',
-  /** column name */
-  FirstName = 'firstName',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  LastLoggedInAt = 'lastLoggedInAt',
-  /** column name */
-  LastName = 'lastName',
-  /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
-  Username = 'username'
-}
 
 
 /** expression to compare columns of type uuid. All fields are combined with logical 'AND'. */
@@ -5423,6 +5467,7 @@ export type Uuid_Comparison_Exp = {
 export type CreateChannelMutationVariables = Exact<{
   name: Scalars['String'];
   vonage_session_id: Scalars['String'];
+  hls_uri: Scalars['String'];
 }>;
 
 
@@ -5449,8 +5494,10 @@ export type GetChannelQuery = (
 
 
 export const CreateChannelDocument = gql`
-    mutation createChannel($name: String!, $vonage_session_id: String!) {
-  insert_Channel_one(object: {name: $name, vonage_session_id: $vonage_session_id}) {
+    mutation createChannel($name: String!, $vonage_session_id: String!, $hls_uri: String!) {
+  insert_Channel_one(
+    object: {name: $name, vonage_session_id: $vonage_session_id, hls_uri: $hls_uri}
+  ) {
     id
   }
 }

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const _getChannels = gql`
+gql`
     query getChannels {
         Channel {
             id

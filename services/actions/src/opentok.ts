@@ -17,3 +17,5 @@ function initialiseOpenTok() {
 export const opentok = initialiseOpenTok();
 
 export const createSession = promisify(opentok.createSession.bind(opentok));
+
+export const startBroadcast = promisify(opentok.startBroadcast.bind(opentok));

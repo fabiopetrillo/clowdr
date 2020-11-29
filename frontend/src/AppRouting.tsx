@@ -2,11 +2,11 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import LoggedOutPage from "./aspects/Auth/LoggedOutPage";
 import ProtectedRoute from "./aspects/Auth/ProtectedRoute";
+import VideoPage from "./aspects/Channel/VideoPage";
 import PageNotFound from "./aspects/Errors/PageNotFound";
 import PageNotImplemented from "./aspects/Errors/PageNotImplemented";
 import ExistingUserLandingPage from "./aspects/Users/ExistingUser/LandingPage";
 import NewUserLandingPage from "./aspects/Users/NewUser/LandingPage";
-import VideoPage from "./aspects/Channel/VideoPage";
 
 export default function Routing(): JSX.Element {
     return (
@@ -37,9 +37,12 @@ export default function Routing(): JSX.Element {
             <Route exact path="/user">
                 <PageNotImplemented />
             </Route>
+            <Route exact path="/video">
+                <VideoPage />
+            </Route>
 
-            {/* 
-            
+            {/*
+
             <Route exact path="/echo">
                 <Echo />
             </Route>
@@ -57,7 +60,7 @@ export default function Routing(): JSX.Element {
                     <ChatsPage chatId={p.match.params.chatId} />
                 )}
             />
-            
+
             <ProtectedRoute exact path="/profile" component={UserProfileInfo} /> */}
 
             <Route path="/">

@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
+import fetch from "node-fetch";
 import checkScopes from "./checkScopes";
 import createChannelHandler from "./handlers/channel/create";
 import getChannelTokenHandler from "./handlers/channel/token";
@@ -93,9 +94,28 @@ app.post("/echo", jsonParser, async (req: Request, res: Response) => {
 app.post("/channel/create", jsonParser, async (req: Request, res: Response) => {
     const params: createChannelArgs = req.body.input;
     try {
-        const result = await createChannelHandler(params.name);
+        const broadcastRepsonse = await fetch(
+            `${process.env.PLAYOUT_BASE_URL}/broadcast`,
+            {
+                method: "POST",
+                body: JSON.stringify({ name: params.name }),
+                headers: { "Content-Type": "application/json" },
+            }
+        ).then((response) => response.json());
+        if (broadcastRepsonse.type !== "success") {
+            console.error("Failed to create broadcast", broadcastRepsonse);
+            res.status(500).json(JSON.stringify(broadcastRepsonse));
+            return;
+        }
+        const result = await createChannelHandler(
+            params.name,
+            broadcastRepsonse.rtmpUri,
+            broadcastRepsonse.hlsUri
+        );
+
         return res.json(result);
     } catch (e) {
+        console.error("Failed to create channel", e);
         return res.status(500).json(JSON.stringify(e));
     }
 });

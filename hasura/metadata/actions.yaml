@@ -1,7 +1,7 @@
 actions:
 - name: createChannel
   definition:
-    kind: synchronous
+    kind: asynchronous
     handler: '{{ACTION_BASE_URL}}/channel/create'
     forward_client_headers: true
   permissions:

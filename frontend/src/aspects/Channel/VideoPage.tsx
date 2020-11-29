@@ -8,31 +8,37 @@ import {
     Input,
 } from "@chakra-ui/react";
 import {
-    ChannelFieldsFragment,
-    useCreateChannelMutation,
-    useSelectChannelsQuery,
-    useGetChannelTokenQuery,
-} from "../../generated/graphql";
-import { useForm } from "react-hook-form";
-import React, { useState } from "react";
-import {
-    OTSession,
     OTPublisher,
+    OTSession,
     OTStreams,
     OTSubscriber,
     preloadScript,
 } from "opentok-react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import {
+    ChannelFieldsFragment,
+    useCreateChannelMutation,
+    useGetChannelTokenQuery,
+    useSelectChannelsQuery,
+} from "../../generated/graphql";
 import useQueryErrorToast from "../GQL/useQueryErrorToast";
 
-const _createChannel = gql`
+gql`
     mutation createChannel($name: String!) {
-        createChannel(name: $name) {
-            id
+        createChannel(name: $name)
+    }
+`;
+
+gql`
+    subscription createChannelSubscription($jobId: uuid!) {
+        createChannel(id: $jobId) {
+            errors
         }
     }
 `;
 
-const _queryChannels = gql`
+gql`
     query selectChannels {
         Channel {
             ...ChannelFields
@@ -46,7 +52,7 @@ const _queryChannels = gql`
     }
 `;
 
-const _getChannelToken = gql`
+gql`
     query getChannelToken($channelId: uuid!) {
         getChannelToken(channelId: $channelId) {
             token
@@ -78,7 +84,7 @@ function VideoPage(): JSX.Element {
                     name: data.name,
                 },
             });
-            if (result.data) {
+            if (result) {
                 await refetch();
             }
             reset();

@@ -67,7 +67,7 @@
             },
             "args": ["run", "dev"]
         },
-        // Action service -- Heroku Local
+        // Actions service -- Heroku Local
         {
             "label": "Actions Service -- Heroku Local",
             "type": "shell",
@@ -112,6 +112,34 @@
             },
             "args": ["local", "playout"]
         },
+        // Actions service -- GraphQL Codegen
+        {
+            "label": "Actions Service -- GraphQL Codegen",
+            "type": "shell",
+            "command": "npm",
+            "problemMatcher": [],
+            "options": {
+                "cwd": "${workspaceFolder}/services/actions"
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "args": ["run", "graphql-codegen"]
+        },
+        // Playout service -- GraphQL Codegen
+        {
+            "label": "Playout Service -- GraphQL Codegen",
+            "type": "shell",
+            "command": "npm",
+            "problemMatcher": [],
+            "options": {
+                "cwd": "${workspaceFolder}/services/playout"
+            },
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "args": ["run", "graphql-codegen"]
+        },
         // Frontend -- GraphQL Codegen
         {
             "label": "Frontend -- GraphQL Codegen",
@@ -125,6 +153,18 @@
                 "instanceLimit": 1
             },
             "args": ["run", "graphql-codegen"]
+        },
+        // Run All -- GraphQL Codegen
+        {
+            "label": "Run All -- GraphQL Codegen",
+            "dependsOn": [
+                "Frontend -- GraphQL Codegen",
+                "Playout Service -- GraphQL Codegen",
+                "Actions Service -- GraphQL Codegen"
+            ],
+            "dependsOrder": "parallel",
+            "isBackground": true,
+            "problemMatcher": []
         },
         // Frontend -- Local Development
         {
