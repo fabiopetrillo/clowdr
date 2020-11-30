@@ -3,9 +3,18 @@ import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
+import { is } from "typescript-is";
 import checkScopes from "./checkScopes";
 import handlerEcho from "./handlers/echo";
 import protectedEchoHandler from "./handlers/protectedEcho";
+import {
+    handleRoomCreated,
+    handleRoomDeleted,
+    handleWebhook,
+    Room,
+} from "./room/handler";
+import { WebhookReqBody } from "./room/opentok";
+import { Payload } from "./types/event";
 
 if (process.env.NODE_ENV !== "test") {
     assert(
@@ -87,6 +96,60 @@ app.post("/echo", jsonParser, async (req: Request, res: Response) => {
     const result = handlerEcho(params);
     return res.json(result);
 });
+
+app.post(
+    "/channel/created",
+    jsonParser,
+    async (req: Request, res: Response) => {
+        console.log("/channel/created", req.body.id);
+        try {
+            if (!is<Payload<Room>>(req.body)) {
+                throw new Error("Invalid payload");
+            }
+            await handleRoomCreated(req.body);
+            res.status(200).json("OK");
+        } catch (e) {
+            console.error("Error handling room creation", e);
+            res.status(500).json("Failure");
+        }
+    }
+);
+
+app.post(
+    "/channel/deleted",
+    jsonParser,
+    async (req: Request, res: Response) => {
+        console.log("/channel/deleted", req.body.id);
+        try {
+            if (!is<Payload<Room>>(req.body)) {
+                throw new Error("Invalid payload");
+            }
+            await handleRoomDeleted(req.body);
+            res.status(200).json("OK");
+        } catch (e) {
+            console.error("Error handling room deletion", e);
+            res.status(500).json("Failure");
+        }
+    }
+);
+
+app.post(
+    "/vonage/sessionmonitoring",
+    jsonParser,
+    async (req: Request, res: Response) => {
+        console.log("/vonage/sessionmonitoring");
+        try {
+            if (!is<WebhookReqBody>(req.body)) {
+                throw new Error("Invalid session monitoring call");
+            }
+            await handleWebhook(req.body);
+            res.status(200).json("OK");
+        } catch (e) {
+            console.error("Error handling session monitoring call", e);
+            res.status(500).json("Failure");
+        }
+    }
+);
 
 const portNumber = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 export const server = app.listen(portNumber, function () {

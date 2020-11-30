@@ -32,10 +32,10 @@ export default function checkScopes(
     authKey: string,
     namespaceKey: string,
     scopeKey: string,
-    checkAllScopes: boolean = false,
-    failWithError: boolean = false
+    checkAllScopes = false,
+    failWithError = false
 ) {
-    return (_req: Request, res: Response, next: NextFunction) => {
+    return (_req: Request, res: Response, next: NextFunction): void => {
         const req: any = _req;
 
         const error = (res: Response) => {
