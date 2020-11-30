@@ -2,13 +2,16 @@ import assert from "assert";
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import jwt from "express-jwt";
+import { gql } from "graphql-request";
 import jwksRsa from "jwks-rsa";
 import fetch from "node-fetch";
 import checkScopes from "./checkScopes";
+import { sdk } from "./graphqlClient";
 import createChannelHandler from "./handlers/channel/create";
 import getChannelTokenHandler from "./handlers/channel/token";
 import handlerEcho from "./handlers/echo";
 import protectedEchoHandler from "./handlers/protectedEcho";
+import { startBroadcast } from "./opentok";
 
 if (process.env.NODE_ENV !== "test") {
     assert(
@@ -119,6 +122,43 @@ app.post("/channel/create", jsonParser, async (req: Request, res: Response) => {
         return res.status(500).json(JSON.stringify(e));
     }
 });
+
+gql`
+    query getRtmpUri($sessionId: String!) {
+        Channel(where: { vonage_session_id: { _eq: $sessionId } }, limit: 1) {
+            rtmp_uri
+        }
+    }
+`;
+
+app.post(
+    "/channel/broadcast",
+    jsonParser,
+    async (req: Request, res: Response) => {
+        const rtmpUri = (
+            await sdk.getRtmpUri({ sessionId: req.body.sessionId })
+        ).Channel[0].rtmp_uri;
+        console.log("rtmp_uri", rtmpUri);
+        if (!rtmpUri) {
+            throw new Error("No RTMP uri");
+        }
+        await startBroadcast(req.body.sessionId, {
+            layout: {
+                type: "bestFit",
+            },
+            outputs: {
+                rtmp: [
+                    {
+                        id: "aws-medialive",
+                        serverUrl: rtmpUri,
+                        streamName: "test",
+                    },
+                ],
+            },
+        });
+        res.status(200).json({ message: "OK" });
+    }
+);
 
 app.post("/channel/token", jsonParser, async (req: Request, res: Response) => {
     const params: getChannelTokenArgs = req.body.input;

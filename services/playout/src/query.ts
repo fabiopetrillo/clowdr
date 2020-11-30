@@ -9,3 +9,14 @@ gql`
         }
     }
 `;
+
+gql`
+    mutation setRtmpUri($sessionId: uuid!, $rtmpUri: String!) {
+        update_Channel(
+            where: { id: { _eq: $sessionId } }
+            _set: { rtmp_uri: $rtmpUri }
+        ) {
+            affected_rows
+        }
+    }
+`;

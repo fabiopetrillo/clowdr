@@ -36,6 +36,7 @@ export type Channel = {
   hls_uri?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   name: Scalars['String'];
+  rtmp_uri?: Maybe<Scalars['String']>;
   updated_at: Scalars['timestamptz'];
   vonage_session_id: Scalars['String'];
 };
@@ -84,6 +85,7 @@ export type Channel_Bool_Exp = {
   hls_uri?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
+  rtmp_uri?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   vonage_session_id?: Maybe<String_Comparison_Exp>;
 };
@@ -100,6 +102,7 @@ export type Channel_Insert_Input = {
   hls_uri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
+  rtmp_uri?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   vonage_session_id?: Maybe<Scalars['String']>;
 };
@@ -111,6 +114,7 @@ export type Channel_Max_Fields = {
   hls_uri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
+  rtmp_uri?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   vonage_session_id?: Maybe<Scalars['String']>;
 };
@@ -121,6 +125,7 @@ export type Channel_Max_Order_By = {
   hls_uri?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  rtmp_uri?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   vonage_session_id?: Maybe<Order_By>;
 };
@@ -132,6 +137,7 @@ export type Channel_Min_Fields = {
   hls_uri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
+  rtmp_uri?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   vonage_session_id?: Maybe<Scalars['String']>;
 };
@@ -142,6 +148,7 @@ export type Channel_Min_Order_By = {
   hls_uri?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  rtmp_uri?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   vonage_session_id?: Maybe<Order_By>;
 };
@@ -174,6 +181,7 @@ export type Channel_Order_By = {
   hls_uri?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  rtmp_uri?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   vonage_session_id?: Maybe<Order_By>;
 };
@@ -194,6 +202,8 @@ export enum Channel_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
+  RtmpUri = 'rtmp_uri',
+  /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
   VonageSessionId = 'vonage_session_id'
@@ -205,6 +215,7 @@ export type Channel_Set_Input = {
   hls_uri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
+  rtmp_uri?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   vonage_session_id?: Maybe<Scalars['String']>;
 };
@@ -219,6 +230,8 @@ export enum Channel_Update_Column {
   Id = 'id',
   /** column name */
   Name = 'name',
+  /** column name */
+  RtmpUri = 'rtmp_uri',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -5468,6 +5481,7 @@ export type CreateChannelMutationVariables = Exact<{
   name: Scalars['String'];
   vonage_session_id: Scalars['String'];
   hls_uri: Scalars['String'];
+  rtmp_uri: Scalars['String'];
 }>;
 
 
@@ -5492,11 +5506,24 @@ export type GetChannelQuery = (
   )> }
 );
 
+export type GetRtmpUriQueryVariables = Exact<{
+  sessionId: Scalars['String'];
+}>;
+
+
+export type GetRtmpUriQuery = (
+  { __typename?: 'query_root' }
+  & { Channel: Array<(
+    { __typename?: 'Channel' }
+    & Pick<Channel, 'rtmp_uri'>
+  )> }
+);
+
 
 export const CreateChannelDocument = gql`
-    mutation createChannel($name: String!, $vonage_session_id: String!, $hls_uri: String!) {
+    mutation createChannel($name: String!, $vonage_session_id: String!, $hls_uri: String!, $rtmp_uri: String!) {
   insert_Channel_one(
-    object: {name: $name, vonage_session_id: $vonage_session_id, hls_uri: $hls_uri}
+    object: {name: $name, vonage_session_id: $vonage_session_id, hls_uri: $hls_uri, rtmp_uri: $rtmp_uri}
   ) {
     id
   }
@@ -5506,6 +5533,13 @@ export const GetChannelDocument = gql`
     query getChannel($channelId: uuid!) {
   Channel(where: {id: {_eq: $channelId}}) {
     vonage_session_id
+  }
+}
+    `;
+export const GetRtmpUriDocument = gql`
+    query getRtmpUri($sessionId: String!) {
+  Channel(where: {vonage_session_id: {_eq: $sessionId}}, limit: 1) {
+    rtmp_uri
   }
 }
     `;
@@ -5521,6 +5555,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getChannel(variables: GetChannelQueryVariables): Promise<GetChannelQuery> {
       return withWrapper(() => client.request<GetChannelQuery>(print(GetChannelDocument), variables));
+    },
+    getRtmpUri(variables: GetRtmpUriQueryVariables): Promise<GetRtmpUriQuery> {
+      return withWrapper(() => client.request<GetRtmpUriQuery>(print(GetRtmpUriDocument), variables));
     }
   };
 }

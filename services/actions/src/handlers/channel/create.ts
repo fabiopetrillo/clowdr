@@ -7,12 +7,14 @@ gql`
         $name: String!
         $vonage_session_id: String!
         $hls_uri: String!
+        $rtmp_uri: String!
     ) {
         insert_Channel_one(
             object: {
                 name: $name
                 vonage_session_id: $vonage_session_id
                 hls_uri: $hls_uri
+                rtmp_uri: $rtmp_uri
             }
         ) {
             id
@@ -44,6 +46,7 @@ export default async function createChannelHandler(
         name,
         vonage_session_id: session.sessionId,
         hls_uri: hlsUri,
+        rtmp_uri: rtmpUri
     });
     if (result.insert_Channel_one?.id) {
         return {
