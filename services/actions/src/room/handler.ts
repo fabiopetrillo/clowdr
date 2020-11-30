@@ -196,14 +196,22 @@ async function handleWebhook(payload: WebhookReqBody): Promise<void> {
     if (!result.data.Room[0].rtmpUri) {
         throw new Error("No RTMP URI set");
     }
+
+    const rtmpUri = result.data.Room[0].rtmpUri;
+    const rtmpUriParts = rtmpUri.split("/");
+    const streamName = rtmpUriParts[rtmpUriParts.length - 1];
+    const serverUrl = rtmpUri.substring(0, rtmpUri.length - streamName.length);
+
+    console.log("Starting broadcast", { serverUrl, streamName });
+
     await startBroadcast(payload.sessionId, {
         layout: { type: "bestFit" },
         outputs: {
             rtmp: [
                 {
                     id: awsId(),
-                    serverUrl: result.data.Room[0].rtmpUri,
-                    streamName: "broadcast",
+                    serverUrl,
+                    streamName,
                 },
             ],
         },

@@ -153,7 +153,7 @@ app.post(
             res.status(200).json("OK");
         } catch (e) {
             console.error("Error handling session monitoring call", e);
-            res.status(500).json("Failure");
+            res.status(200).json("Failure");
         }
     }
 );

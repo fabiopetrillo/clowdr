@@ -10,7 +10,7 @@ async function createOrGetInputSecurityGroup(): Promise<string> {
         return securityGroups.InputSecurityGroups[0].Id;
     } else {
         const securityGroup = await medialive.createInputSecurityGroup({
-            WhitelistRules: [{ Cidr: "0.0.0.1/32" }],
+            WhitelistRules: [{ Cidr: "0.0.0.1/0" }],
         });
         if (!securityGroup.SecurityGroup?.Id) {
             throw new Error("Failed to create new InputSecurityGroup");
