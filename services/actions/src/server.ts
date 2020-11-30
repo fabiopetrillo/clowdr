@@ -8,6 +8,7 @@ import checkScopes from "./checkScopes";
 import handlerEcho from "./handlers/echo";
 import protectedEchoHandler from "./handlers/protectedEcho";
 import {
+    handleGenerateToken,
     handleRoomCreated,
     handleRoomDeleted,
     handleWebhook,
@@ -97,38 +98,44 @@ app.post("/echo", jsonParser, async (req: Request, res: Response) => {
     return res.json(result);
 });
 
-app.post(
-    "/channel/created",
-    jsonParser,
-    async (req: Request, res: Response) => {
-        console.log("/channel/created", req.body.id);
-        try {
-            if (!is<Payload<Room>>(req.body)) {
-                throw new Error("Invalid payload");
-            }
-            await handleRoomCreated(req.body);
-            res.status(200).json("OK");
-        } catch (e) {
-            console.error("Error handling room creation", e);
-            res.status(500).json("Failure");
+app.post("/room/created", jsonParser, async (req: Request, res: Response) => {
+    console.log("/room/created", req.body.id);
+    try {
+        if (!is<Payload<Room>>(req.body)) {
+            throw new Error("Invalid payload");
         }
+        await handleRoomCreated(req.body);
+        res.status(200).json("OK");
+    } catch (e) {
+        console.error("Error handling room creation", e);
+        res.status(500).json("Failure");
     }
-);
+});
+
+app.post("/room/deleted", jsonParser, async (req: Request, res: Response) => {
+    console.log("/room/deleted", req.body.id);
+    try {
+        if (!is<Payload<Room>>(req.body)) {
+            throw new Error("Invalid payload");
+        }
+        await handleRoomDeleted(req.body);
+        res.status(200).json("OK");
+    } catch (e) {
+        console.error("Error handling room deletion", e);
+        res.status(500).json("Failure");
+    }
+});
 
 app.post(
-    "/channel/deleted",
+    "/room/generateToken",
     jsonParser,
     async (req: Request, res: Response) => {
-        console.log("/channel/deleted", req.body.id);
+        const params: generateVonageTokenArgs = req.body.input;
         try {
-            if (!is<Payload<Room>>(req.body)) {
-                throw new Error("Invalid payload");
-            }
-            await handleRoomDeleted(req.body);
-            res.status(200).json("OK");
+            const token = await handleGenerateToken(params.roomId);
+            res.status(200).json({ token });
         } catch (e) {
-            console.error("Error handling room deletion", e);
-            res.status(500).json("Failure");
+            res.status(500).json(JSON.stringify(e));
         }
     }
 );

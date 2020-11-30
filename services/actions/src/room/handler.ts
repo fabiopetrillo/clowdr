@@ -2,6 +2,7 @@ import { gql } from "@apollo/client/core";
 import {
     CompleteRoomDocument,
     GetRoomBySessionIdDocument,
+    GetRoomDocument,
 } from "../generated/graphql";
 import { client } from "../graphqlClient";
 import { Payload } from "../types/event";
@@ -24,6 +25,7 @@ import {
 import {
     createSession,
     listBroadcasts,
+    opentok,
     startBroadcast,
     WebhookReqBody,
 } from "./opentok";
@@ -167,7 +169,7 @@ async function handleRoomDeleted(payload: Payload<Room>): Promise<void> {
 }
 
 gql`
-    query getRoomBySessionId($vonageSessionId: String = "vonageSessionId") {
+    query getRoomBySessionId($vonageSessionId: String!) {
         Room(where: { vonageSessionId: { _eq: $vonageSessionId } }) {
             rtmpUri
         }
@@ -208,4 +210,36 @@ async function handleWebhook(payload: WebhookReqBody): Promise<void> {
     });
 }
 
-export { Room, handleRoomDeleted, handleRoomCreated, handleWebhook };
+gql`
+    query getRoom($roomId: uuid!) {
+        Room(where: { id: { _eq: $roomId } }) {
+            vonageSessionId
+        }
+    }
+`;
+
+async function handleGenerateToken(roomId: string): Promise<string> {
+    const result = await client.query({
+        query: GetRoomDocument,
+        variables: { roomId },
+    });
+    if (result.data.Room.length !== 1) {
+        throw new Error("Did not find a Room to generate the token for");
+    }
+    if (!result.data.Room[0].vonageSessionId) {
+        throw new Error("No session associated with this room");
+    }
+    const token = opentok.generateToken(result.data.Room[0].vonageSessionId, {
+        data: "",
+        role: "publisher",
+    });
+    return token;
+}
+
+export {
+    Room,
+    handleRoomDeleted,
+    handleRoomCreated,
+    handleWebhook,
+    handleGenerateToken,
+};

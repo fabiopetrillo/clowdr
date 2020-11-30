@@ -2109,7 +2109,7 @@
       num_retries: 0
       interval_sec: 10
       timeout_sec: 60
-    webhook: http://host.docker.internal:3001/channel/created
+    webhook: http://host.docker.internal:3001/room/created
   - name: roomDeleted
     definition:
       enable_manual: false
@@ -2119,7 +2119,7 @@
       num_retries: 0
       interval_sec: 10
       timeout_sec: 60
-    webhook: http://host.docker.internal:3001/channel/deleted
+    webhook: http://host.docker.internal:3001/room/deleted
 - table:
     schema: public
     name: User

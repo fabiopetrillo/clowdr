@@ -1,5 +1,7 @@
 type Maybe<T> = T | null;
 
+type uuid = string;
+
 type SampleOutput = {
     accessToken: string;
 };
@@ -10,6 +12,10 @@ type EchoOutput = {
 
 type ProtectedEchoOutput = {
     message: string;
+};
+
+type GenerateVonageTokenOutput = {
+    token: string;
 };
 
 type SampleInput = {
@@ -26,10 +32,18 @@ type Query = {
     protectedEcho?: Maybe<ProtectedEchoOutput>;
 };
 
+type Mutation = {
+    generateVonageToken?: Maybe<GenerateVonageTokenOutput>;
+};
+
 type echoArgs = {
     message: string;
 };
 
 type protectedEchoArgs = {
     message: string;
+};
+
+type generateVonageTokenArgs = {
+    roomId: uuid;
 };

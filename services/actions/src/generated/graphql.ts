@@ -3646,6 +3646,11 @@ export enum FollowedChat_Update_Column {
   UserId = 'userId'
 }
 
+export type GenerateVonageTokenOutput = {
+  __typename?: 'GenerateVonageTokenOutput';
+  token: Scalars['String'];
+};
+
 /** columns and relationships of "Group" */
 export type Group = {
   __typename?: 'Group';
@@ -6176,6 +6181,8 @@ export type Mutation_Root = {
   delete_User?: Maybe<User_Mutation_Response>;
   /** delete single row from the table: "User" */
   delete_User_by_pk?: Maybe<User>;
+  /** perform the action: "generateVonageToken" */
+  generateVonageToken?: Maybe<GenerateVonageTokenOutput>;
   /** insert data into the table: "ActiveGroup" */
   insert_ActiveGroup?: Maybe<ActiveGroup_Mutation_Response>;
   /** insert a single row into the table: "ActiveGroup" */
@@ -6668,6 +6675,12 @@ export type Mutation_RootDelete_UserArgs = {
 /** mutation root */
 export type Mutation_RootDelete_User_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootGenerateVonageTokenArgs = {
+  roomId: Scalars['uuid'];
 };
 
 
@@ -9065,7 +9078,7 @@ export type CompleteRoomMutation = (
 );
 
 export type GetRoomBySessionIdQueryVariables = Exact<{
-  vonageSessionId?: Maybe<Scalars['String']>;
+  vonageSessionId: Scalars['String'];
 }>;
 
 
@@ -9077,6 +9090,20 @@ export type GetRoomBySessionIdQuery = (
   )> }
 );
 
+export type GetRoomQueryVariables = Exact<{
+  roomId: Scalars['uuid'];
+}>;
+
+
+export type GetRoomQuery = (
+  { __typename?: 'query_root' }
+  & { Room: Array<(
+    { __typename?: 'Room' }
+    & Pick<Room, 'vonageSessionId'>
+  )> }
+);
+
 
 export const CompleteRoomDocument: DocumentNode<CompleteRoomMutation, CompleteRoomMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"completeRoom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cloudfrontDistributionId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hlsUri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mediaLiveChannelId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mediaPackageChannelId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rtmpUri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_Room"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"cloudfrontDistributionId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cloudfrontDistributionId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"hlsUri"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hlsUri"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"mediaLiveChannelId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mediaLiveChannelId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"mediaPackageChannelId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mediaPackageChannelId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"rtmpUri"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rtmpUri"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"vonageSessionId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]};
-export const GetRoomBySessionIdDocument: DocumentNode<GetRoomBySessionIdQuery, GetRoomBySessionIdQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRoomBySessionId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"vonageSessionId","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Room"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"vonageSessionId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rtmpUri"}}]}}]}}]};
+export const GetRoomBySessionIdDocument: DocumentNode<GetRoomBySessionIdQuery, GetRoomBySessionIdQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRoomBySessionId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Room"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"vonageSessionId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rtmpUri"}}]}}]}}]};
+export const GetRoomDocument: DocumentNode<GetRoomQuery, GetRoomQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRoom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"roomId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Room"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"roomId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vonageSessionId"}}]}}]}}]};

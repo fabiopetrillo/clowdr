@@ -6,6 +6,13 @@ actions:
   permissions:
   - role: unauthenticated
   - role: user
+- name: generateVonageToken
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/room/generateToken'
+    forward_client_headers: true
+  permissions:
+  - role: user
 - name: protectedEcho
   definition:
     kind: ""
@@ -22,4 +29,5 @@ custom_types:
   - name: SampleOutput
   - name: EchoOutput
   - name: ProtectedEchoOutput
+  - name: GenerateVonageTokenOutput
   scalars: []

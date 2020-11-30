@@ -4,6 +4,7 @@ import LoggedOutPage from "./aspects/Auth/LoggedOutPage";
 import ProtectedRoute from "./aspects/Auth/ProtectedRoute";
 import ConferenceRoutes from "./aspects/Conference/ConferenceRoutes";
 import PageNotFound from "./aspects/Errors/PageNotFound";
+import RoomsPage from "./aspects/Room/RoomsPage";
 import CurrentUserPage from "./aspects/Users/CurrentUser/CurrentUserPage";
 import ExistingUserLandingPage from "./aspects/Users/ExistingUser/LandingPage";
 import NewUserLandingPage from "./aspects/Users/NewUser/LandingPage";
@@ -35,6 +36,8 @@ export default function Routing(): JSX.Element {
             />
 
             <ProtectedRoute exact path="/user" component={CurrentUserPage} />
+
+            <ProtectedRoute exact path="/rooms" component={RoomsPage} />
 
             <Route
                 path="/conference/:confSlug"

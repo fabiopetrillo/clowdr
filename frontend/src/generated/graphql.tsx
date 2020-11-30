@@ -3647,6 +3647,11 @@ export enum FollowedChat_Update_Column {
   UserId = 'userId'
 }
 
+export type GenerateVonageTokenOutput = {
+  readonly __typename?: 'GenerateVonageTokenOutput';
+  readonly token: Scalars['String'];
+};
+
 /** columns and relationships of "Group" */
 export type Group = {
   readonly __typename?: 'Group';
@@ -4512,11 +4517,11 @@ export enum Permission_Constraint {
 }
 
 export enum Permission_Enum {
-  /** Manage a conference attendees. */
+  /** Manage (create/update/delete) conference attendees. */
   ConferenceManageAttendees = 'CONFERENCE_MANAGE_ATTENDEES',
   /** Manage groups of a conference. */
   ConferenceManageGroups = 'CONFERENCE_MANAGE_GROUPS',
-  /** Manage a conference name, short name and slug. */
+  /** Manage (update only) conference name, short name and slug. */
   ConferenceManageName = 'CONFERENCE_MANAGE_NAME',
   /** Manage roles of a conference. */
   ConferenceManageRoles = 'CONFERENCE_MANAGE_ROLES',
@@ -4524,9 +4529,9 @@ export enum Permission_Enum {
   ConferenceModerateAttendees = 'CONFERENCE_MODERATE_ATTENDEES',
   /** View the conference. */
   ConferenceView = 'CONFERENCE_VIEW',
-  /** Access conference active attendees data. */
+  /** View conference active attendees. */
   ConferenceViewActiveAttendees = 'CONFERENCE_VIEW_ACTIVE_ATTENDEES',
-  /** Access conference banned attendees data. */
+  /** View conference banned attendees. */
   ConferenceViewBannedAttendees = 'CONFERENCE_VIEW_BANNED_ATTENDEES'
 }
 
@@ -5192,6 +5197,254 @@ export enum Role_Update_Column {
   Id = 'id',
   /** column name */
   Name = 'name'
+}
+
+/** columns and relationships of "Room" */
+export type Room = {
+  readonly __typename?: 'Room';
+  readonly cloudfrontDistributionId?: Maybe<Scalars['String']>;
+  readonly createdAt: Scalars['timestamptz'];
+  readonly hlsUri?: Maybe<Scalars['String']>;
+  readonly id: Scalars['uuid'];
+  readonly mediaLiveChannelId?: Maybe<Scalars['String']>;
+  readonly mediaPackageChannelId?: Maybe<Scalars['String']>;
+  readonly name: Scalars['String'];
+  readonly rtmpUri?: Maybe<Scalars['String']>;
+  readonly updatedAt: Scalars['timestamptz'];
+  readonly vonageSessionId?: Maybe<Scalars['String']>;
+};
+
+/** aggregated selection of "Room" */
+export type Room_Aggregate = {
+  readonly __typename?: 'Room_aggregate';
+  readonly aggregate?: Maybe<Room_Aggregate_Fields>;
+  readonly nodes: ReadonlyArray<Room>;
+};
+
+/** aggregate fields of "Room" */
+export type Room_Aggregate_Fields = {
+  readonly __typename?: 'Room_aggregate_fields';
+  readonly count?: Maybe<Scalars['Int']>;
+  readonly max?: Maybe<Room_Max_Fields>;
+  readonly min?: Maybe<Room_Min_Fields>;
+};
+
+
+/** aggregate fields of "Room" */
+export type Room_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<ReadonlyArray<Room_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "Room" */
+export type Room_Aggregate_Order_By = {
+  readonly count?: Maybe<Order_By>;
+  readonly max?: Maybe<Room_Max_Order_By>;
+  readonly min?: Maybe<Room_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "Room" */
+export type Room_Arr_Rel_Insert_Input = {
+  readonly data: ReadonlyArray<Room_Insert_Input>;
+  readonly on_conflict?: Maybe<Room_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "Room". All fields are combined with a logical 'AND'. */
+export type Room_Bool_Exp = {
+  readonly _and?: Maybe<ReadonlyArray<Maybe<Room_Bool_Exp>>>;
+  readonly _not?: Maybe<Room_Bool_Exp>;
+  readonly _or?: Maybe<ReadonlyArray<Maybe<Room_Bool_Exp>>>;
+  readonly cloudfrontDistributionId?: Maybe<String_Comparison_Exp>;
+  readonly createdAt?: Maybe<Timestamptz_Comparison_Exp>;
+  readonly hlsUri?: Maybe<String_Comparison_Exp>;
+  readonly id?: Maybe<Uuid_Comparison_Exp>;
+  readonly mediaLiveChannelId?: Maybe<String_Comparison_Exp>;
+  readonly mediaPackageChannelId?: Maybe<String_Comparison_Exp>;
+  readonly name?: Maybe<String_Comparison_Exp>;
+  readonly rtmpUri?: Maybe<String_Comparison_Exp>;
+  readonly updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
+  readonly vonageSessionId?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "Room" */
+export enum Room_Constraint {
+  /** unique or primary key constraint */
+  RoomPkey = 'Room_pkey'
+}
+
+/** input type for inserting data into table "Room" */
+export type Room_Insert_Input = {
+  readonly cloudfrontDistributionId?: Maybe<Scalars['String']>;
+  readonly createdAt?: Maybe<Scalars['timestamptz']>;
+  readonly hlsUri?: Maybe<Scalars['String']>;
+  readonly id?: Maybe<Scalars['uuid']>;
+  readonly mediaLiveChannelId?: Maybe<Scalars['String']>;
+  readonly mediaPackageChannelId?: Maybe<Scalars['String']>;
+  readonly name?: Maybe<Scalars['String']>;
+  readonly rtmpUri?: Maybe<Scalars['String']>;
+  readonly updatedAt?: Maybe<Scalars['timestamptz']>;
+  readonly vonageSessionId?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Room_Max_Fields = {
+  readonly __typename?: 'Room_max_fields';
+  readonly cloudfrontDistributionId?: Maybe<Scalars['String']>;
+  readonly createdAt?: Maybe<Scalars['timestamptz']>;
+  readonly hlsUri?: Maybe<Scalars['String']>;
+  readonly id?: Maybe<Scalars['uuid']>;
+  readonly mediaLiveChannelId?: Maybe<Scalars['String']>;
+  readonly mediaPackageChannelId?: Maybe<Scalars['String']>;
+  readonly name?: Maybe<Scalars['String']>;
+  readonly rtmpUri?: Maybe<Scalars['String']>;
+  readonly updatedAt?: Maybe<Scalars['timestamptz']>;
+  readonly vonageSessionId?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "Room" */
+export type Room_Max_Order_By = {
+  readonly cloudfrontDistributionId?: Maybe<Order_By>;
+  readonly createdAt?: Maybe<Order_By>;
+  readonly hlsUri?: Maybe<Order_By>;
+  readonly id?: Maybe<Order_By>;
+  readonly mediaLiveChannelId?: Maybe<Order_By>;
+  readonly mediaPackageChannelId?: Maybe<Order_By>;
+  readonly name?: Maybe<Order_By>;
+  readonly rtmpUri?: Maybe<Order_By>;
+  readonly updatedAt?: Maybe<Order_By>;
+  readonly vonageSessionId?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Room_Min_Fields = {
+  readonly __typename?: 'Room_min_fields';
+  readonly cloudfrontDistributionId?: Maybe<Scalars['String']>;
+  readonly createdAt?: Maybe<Scalars['timestamptz']>;
+  readonly hlsUri?: Maybe<Scalars['String']>;
+  readonly id?: Maybe<Scalars['uuid']>;
+  readonly mediaLiveChannelId?: Maybe<Scalars['String']>;
+  readonly mediaPackageChannelId?: Maybe<Scalars['String']>;
+  readonly name?: Maybe<Scalars['String']>;
+  readonly rtmpUri?: Maybe<Scalars['String']>;
+  readonly updatedAt?: Maybe<Scalars['timestamptz']>;
+  readonly vonageSessionId?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "Room" */
+export type Room_Min_Order_By = {
+  readonly cloudfrontDistributionId?: Maybe<Order_By>;
+  readonly createdAt?: Maybe<Order_By>;
+  readonly hlsUri?: Maybe<Order_By>;
+  readonly id?: Maybe<Order_By>;
+  readonly mediaLiveChannelId?: Maybe<Order_By>;
+  readonly mediaPackageChannelId?: Maybe<Order_By>;
+  readonly name?: Maybe<Order_By>;
+  readonly rtmpUri?: Maybe<Order_By>;
+  readonly updatedAt?: Maybe<Order_By>;
+  readonly vonageSessionId?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "Room" */
+export type Room_Mutation_Response = {
+  readonly __typename?: 'Room_mutation_response';
+  /** number of affected rows by the mutation */
+  readonly affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  readonly returning: ReadonlyArray<Room>;
+};
+
+/** input type for inserting object relation for remote table "Room" */
+export type Room_Obj_Rel_Insert_Input = {
+  readonly data: Room_Insert_Input;
+  readonly on_conflict?: Maybe<Room_On_Conflict>;
+};
+
+/** on conflict condition type for table "Room" */
+export type Room_On_Conflict = {
+  readonly constraint: Room_Constraint;
+  readonly update_columns: ReadonlyArray<Room_Update_Column>;
+  readonly where?: Maybe<Room_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "Room" */
+export type Room_Order_By = {
+  readonly cloudfrontDistributionId?: Maybe<Order_By>;
+  readonly createdAt?: Maybe<Order_By>;
+  readonly hlsUri?: Maybe<Order_By>;
+  readonly id?: Maybe<Order_By>;
+  readonly mediaLiveChannelId?: Maybe<Order_By>;
+  readonly mediaPackageChannelId?: Maybe<Order_By>;
+  readonly name?: Maybe<Order_By>;
+  readonly rtmpUri?: Maybe<Order_By>;
+  readonly updatedAt?: Maybe<Order_By>;
+  readonly vonageSessionId?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "Room" */
+export type Room_Pk_Columns_Input = {
+  readonly id: Scalars['uuid'];
+};
+
+/** select columns of table "Room" */
+export enum Room_Select_Column {
+  /** column name */
+  CloudfrontDistributionId = 'cloudfrontDistributionId',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  HlsUri = 'hlsUri',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MediaLiveChannelId = 'mediaLiveChannelId',
+  /** column name */
+  MediaPackageChannelId = 'mediaPackageChannelId',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  RtmpUri = 'rtmpUri',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  VonageSessionId = 'vonageSessionId'
+}
+
+/** input type for updating data in table "Room" */
+export type Room_Set_Input = {
+  readonly cloudfrontDistributionId?: Maybe<Scalars['String']>;
+  readonly createdAt?: Maybe<Scalars['timestamptz']>;
+  readonly hlsUri?: Maybe<Scalars['String']>;
+  readonly id?: Maybe<Scalars['uuid']>;
+  readonly mediaLiveChannelId?: Maybe<Scalars['String']>;
+  readonly mediaPackageChannelId?: Maybe<Scalars['String']>;
+  readonly name?: Maybe<Scalars['String']>;
+  readonly rtmpUri?: Maybe<Scalars['String']>;
+  readonly updatedAt?: Maybe<Scalars['timestamptz']>;
+  readonly vonageSessionId?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "Room" */
+export enum Room_Update_Column {
+  /** column name */
+  CloudfrontDistributionId = 'cloudfrontDistributionId',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  HlsUri = 'hlsUri',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MediaLiveChannelId = 'mediaLiveChannelId',
+  /** column name */
+  MediaPackageChannelId = 'mediaPackageChannelId',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  RtmpUri = 'rtmpUri',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  VonageSessionId = 'vonageSessionId'
 }
 
 export type SampleInput = {
@@ -5921,10 +6174,16 @@ export type Mutation_Root = {
   readonly delete_RolePermission_by_pk?: Maybe<RolePermission>;
   /** delete single row from the table: "Role" */
   readonly delete_Role_by_pk?: Maybe<Role>;
+  /** delete data from the table: "Room" */
+  readonly delete_Room?: Maybe<Room_Mutation_Response>;
+  /** delete single row from the table: "Room" */
+  readonly delete_Room_by_pk?: Maybe<Room>;
   /** delete data from the table: "User" */
   readonly delete_User?: Maybe<User_Mutation_Response>;
   /** delete single row from the table: "User" */
   readonly delete_User_by_pk?: Maybe<User>;
+  /** perform the action: "generateVonageToken" */
+  readonly generateVonageToken?: Maybe<GenerateVonageTokenOutput>;
   /** insert data into the table: "ActiveGroup" */
   readonly insert_ActiveGroup?: Maybe<ActiveGroup_Mutation_Response>;
   /** insert a single row into the table: "ActiveGroup" */
@@ -6017,6 +6276,10 @@ export type Mutation_Root = {
   readonly insert_RolePermission_one?: Maybe<RolePermission>;
   /** insert a single row into the table: "Role" */
   readonly insert_Role_one?: Maybe<Role>;
+  /** insert data into the table: "Room" */
+  readonly insert_Room?: Maybe<Room_Mutation_Response>;
+  /** insert a single row into the table: "Room" */
+  readonly insert_Room_one?: Maybe<Room>;
   /** insert data into the table: "User" */
   readonly insert_User?: Maybe<User_Mutation_Response>;
   /** insert a single row into the table: "User" */
@@ -6111,6 +6374,10 @@ export type Mutation_Root = {
   readonly update_RolePermission_by_pk?: Maybe<RolePermission>;
   /** update single row of the table: "Role" */
   readonly update_Role_by_pk?: Maybe<Role>;
+  /** update data of the table: "Room" */
+  readonly update_Room?: Maybe<Room_Mutation_Response>;
+  /** update single row of the table: "Room" */
+  readonly update_Room_by_pk?: Maybe<Room>;
   /** update data of the table: "User" */
   readonly update_User?: Maybe<User_Mutation_Response>;
   /** update single row of the table: "User" */
@@ -6389,6 +6656,18 @@ export type Mutation_RootDelete_Role_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_RoomArgs = {
+  where: Room_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Room_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_UserArgs = {
   where: User_Bool_Exp;
 };
@@ -6397,6 +6676,12 @@ export type Mutation_RootDelete_UserArgs = {
 /** mutation root */
 export type Mutation_RootDelete_User_By_PkArgs = {
   id: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootGenerateVonageTokenArgs = {
+  roomId: Scalars['uuid'];
 };
 
 
@@ -6717,6 +7002,20 @@ export type Mutation_RootInsert_RolePermission_OneArgs = {
 export type Mutation_RootInsert_Role_OneArgs = {
   object: Role_Insert_Input;
   on_conflict?: Maybe<Role_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_RoomArgs = {
+  objects: ReadonlyArray<Room_Insert_Input>;
+  on_conflict?: Maybe<Room_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Room_OneArgs = {
+  object: Room_Insert_Input;
+  on_conflict?: Maybe<Room_On_Conflict>;
 };
 
 
@@ -7064,6 +7363,20 @@ export type Mutation_RootUpdate_Role_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_RoomArgs = {
+  _set?: Maybe<Room_Set_Input>;
+  where: Room_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Room_By_PkArgs = {
+  _set?: Maybe<Room_Set_Input>;
+  pk_columns: Room_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_UserArgs = {
   _set?: Maybe<User_Set_Input>;
   where: User_Bool_Exp;
@@ -7231,6 +7544,12 @@ export type Query_Root = {
   readonly Role_aggregate: Role_Aggregate;
   /** fetch data from the table: "Role" using primary key columns */
   readonly Role_by_pk?: Maybe<Role>;
+  /** fetch data from the table: "Room" */
+  readonly Room: ReadonlyArray<Room>;
+  /** fetch aggregated fields from the table: "Room" */
+  readonly Room_aggregate: Room_Aggregate;
+  /** fetch data from the table: "Room" using primary key columns */
+  readonly Room_by_pk?: Maybe<Room>;
   /** fetch data from the table: "User" */
   readonly User: ReadonlyArray<User>;
   /** fetch aggregated fields from the table: "User" */
@@ -7837,6 +8156,32 @@ export type Query_RootRole_By_PkArgs = {
 
 
 /** query root */
+export type Query_RootRoomArgs = {
+  distinct_on?: Maybe<ReadonlyArray<Room_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<ReadonlyArray<Room_Order_By>>;
+  where?: Maybe<Room_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootRoom_AggregateArgs = {
+  distinct_on?: Maybe<ReadonlyArray<Room_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<ReadonlyArray<Room_Order_By>>;
+  where?: Maybe<Room_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootRoom_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
 export type Query_RootUserArgs = {
   distinct_on?: Maybe<ReadonlyArray<User_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8012,6 +8357,12 @@ export type Subscription_Root = {
   readonly Role_aggregate: Role_Aggregate;
   /** fetch data from the table: "Role" using primary key columns */
   readonly Role_by_pk?: Maybe<Role>;
+  /** fetch data from the table: "Room" */
+  readonly Room: ReadonlyArray<Room>;
+  /** fetch aggregated fields from the table: "Room" */
+  readonly Room_aggregate: Room_Aggregate;
+  /** fetch data from the table: "Room" using primary key columns */
+  readonly Room_by_pk?: Maybe<Room>;
   /** fetch data from the table: "User" */
   readonly User: ReadonlyArray<User>;
   /** fetch aggregated fields from the table: "User" */
@@ -8618,6 +8969,32 @@ export type Subscription_RootRole_By_PkArgs = {
 
 
 /** subscription root */
+export type Subscription_RootRoomArgs = {
+  distinct_on?: Maybe<ReadonlyArray<Room_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<ReadonlyArray<Room_Order_By>>;
+  where?: Maybe<Room_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootRoom_AggregateArgs = {
+  distinct_on?: Maybe<ReadonlyArray<Room_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<ReadonlyArray<Room_Order_By>>;
+  where?: Maybe<Room_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootRoom_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
 export type Subscription_RootUserArgs = {
   distinct_on?: Maybe<ReadonlyArray<User_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -8805,6 +9182,23 @@ export type ProtectedEchoQueryVariables = Exact<{
 
 export type ProtectedEchoQuery = { readonly __typename?: 'query_root', readonly protectedEcho?: Maybe<{ readonly __typename?: 'ProtectedEchoOutput', readonly message: string }> };
 
+export type AllRoomsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllRoomsSubscription = { readonly __typename?: 'subscription_root', readonly Room: ReadonlyArray<(
+    { readonly __typename?: 'Room' }
+    & RoomFieldsFragment
+  )> };
+
+export type RoomFieldsFragment = { readonly __typename?: 'Room', readonly id: any, readonly hlsUri?: Maybe<string>, readonly name: string, readonly vonageSessionId?: Maybe<string> };
+
+export type GenerateVonageTokenMutationVariables = Exact<{
+  roomId: Scalars['uuid'];
+}>;
+
+
+export type GenerateVonageTokenMutation = { readonly __typename?: 'mutation_root', readonly generateVonageToken?: Maybe<{ readonly __typename?: 'GenerateVonageTokenOutput', readonly token: string }> };
+
 export type SelectUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -8854,7 +9248,14 @@ export type UpdateCurrentUserLastSeenMutationVariables = Exact<{
 
 export type UpdateCurrentUserLastSeenMutation = { readonly __typename?: 'mutation_root', readonly update_OnlineStatus?: Maybe<{ readonly __typename?: 'OnlineStatus_mutation_response', readonly returning: ReadonlyArray<{ readonly __typename?: 'OnlineStatus', readonly id: any, readonly lastSeen: any }> }> };
 
-
+export const RoomFieldsFragmentDoc = gql`
+    fragment RoomFields on Room {
+  id
+  hlsUri
+  name
+  vonageSessionId
+}
+    `;
 export const CreateChatDocument = gql`
     mutation createChat($description: String!, $name: String!) {
   insert_Chat(objects: {description: $description, name: $name}) {
@@ -9498,6 +9899,66 @@ export function useProtectedEchoLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type ProtectedEchoQueryHookResult = ReturnType<typeof useProtectedEchoQuery>;
 export type ProtectedEchoLazyQueryHookResult = ReturnType<typeof useProtectedEchoLazyQuery>;
 export type ProtectedEchoQueryResult = Apollo.QueryResult<ProtectedEchoQuery, ProtectedEchoQueryVariables>;
+export const AllRoomsDocument = gql`
+    subscription AllRooms {
+  Room {
+    ...RoomFields
+  }
+}
+    ${RoomFieldsFragmentDoc}`;
+
+/**
+ * __useAllRoomsSubscription__
+ *
+ * To run a query within a React component, call `useAllRoomsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useAllRoomsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllRoomsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllRoomsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<AllRoomsSubscription, AllRoomsSubscriptionVariables>) {
+        return Apollo.useSubscription<AllRoomsSubscription, AllRoomsSubscriptionVariables>(AllRoomsDocument, baseOptions);
+      }
+export type AllRoomsSubscriptionHookResult = ReturnType<typeof useAllRoomsSubscription>;
+export type AllRoomsSubscriptionResult = Apollo.SubscriptionResult<AllRoomsSubscription>;
+export const GenerateVonageTokenDocument = gql`
+    mutation GenerateVonageToken($roomId: uuid!) {
+  generateVonageToken(roomId: $roomId) {
+    token
+  }
+}
+    `;
+export type GenerateVonageTokenMutationFn = Apollo.MutationFunction<GenerateVonageTokenMutation, GenerateVonageTokenMutationVariables>;
+
+/**
+ * __useGenerateVonageTokenMutation__
+ *
+ * To run a mutation, you first call `useGenerateVonageTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGenerateVonageTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [generateVonageTokenMutation, { data, loading, error }] = useGenerateVonageTokenMutation({
+ *   variables: {
+ *      roomId: // value for 'roomId'
+ *   },
+ * });
+ */
+export function useGenerateVonageTokenMutation(baseOptions?: Apollo.MutationHookOptions<GenerateVonageTokenMutation, GenerateVonageTokenMutationVariables>) {
+        return Apollo.useMutation<GenerateVonageTokenMutation, GenerateVonageTokenMutationVariables>(GenerateVonageTokenDocument, baseOptions);
+      }
+export type GenerateVonageTokenMutationHookResult = ReturnType<typeof useGenerateVonageTokenMutation>;
+export type GenerateVonageTokenMutationResult = Apollo.MutationResult<GenerateVonageTokenMutation>;
+export type GenerateVonageTokenMutationOptions = Apollo.BaseMutationOptions<GenerateVonageTokenMutation, GenerateVonageTokenMutationVariables>;
 export const SelectUsersDocument = gql`
     query selectUsers {
   User {
