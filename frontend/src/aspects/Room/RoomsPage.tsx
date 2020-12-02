@@ -37,7 +37,7 @@ function RoomsPage(): JSX.Element {
 
     const contents = useMemo(() => {
         if (error) {
-            return <p>{error}</p>;
+            return <p>{JSON.stringify(error)}</p>;
         }
         if (loading) {
             return <p>Loading...</p>;

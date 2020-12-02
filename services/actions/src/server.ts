@@ -11,6 +11,7 @@ import {
     handleGenerateToken,
     handleRoomCreated,
     handleRoomDeleted,
+    handleSwitch,
     handleWebhook,
     Room,
 } from "./room/handler";
@@ -157,6 +158,24 @@ app.post(
         }
     }
 );
+
+interface SwitchReq {
+    roomId: string;
+}
+
+app.post("/room/switch", jsonParser, async (req: Request, res: Response) => {
+    try {
+        if (!is<SwitchReq>(req.body)) {
+            throw new Error("Invalid call to /room/switch");
+        }
+        await handleSwitch(req.body.roomId);
+        res.status(200).json("OK");
+    } catch (e) {
+        console.error("Error switching room input", e);
+        res.status(500).json("Failure");
+    }
+    res.status(200).json("OK");
+});
 
 const portNumber = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 export const server = app.listen(portNumber, function () {

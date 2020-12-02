@@ -1,12 +1,13 @@
 import { gql } from "@apollo/client/core";
 import {
     CompleteRoomDocument,
+    GetMediaLiveChannelDocument,
     GetRoomBySessionIdDocument,
     GetRoomDocument,
 } from "../generated/graphql";
 import { client } from "../graphqlClient";
 import { Payload } from "../types/event";
-import { awsId } from "./aws";
+import { awsId, medialive } from "./aws";
 import {
     createDistribution,
     deleteDistributionResources,
@@ -244,10 +245,50 @@ async function handleGenerateToken(roomId: string): Promise<string> {
     return token;
 }
 
+gql`
+    query getMediaLiveChannel($roomId: uuid!) {
+        Room(where: { id: { _eq: $roomId } }) {
+            mediaLiveChannelId
+        }
+    }
+`;
+
+async function handleSwitch(roomId: string): Promise<void> {
+    const result = await client.query({
+        query: GetMediaLiveChannelDocument,
+        variables: {
+            roomId,
+        },
+    });
+    if (
+        !result.data.Room ||
+        result.data.Room.length !== 1 ||
+        !result.data.Room[0].mediaLiveChannelId
+    ) {
+        throw new Error("No MediaLive channel for this Room");
+    }
+
+    await medialive.batchUpdateSchedule({
+        ChannelId: result.data.Room[0].mediaLiveChannelId,
+        Creates: {
+            ScheduleActions: [
+                {
+                    ActionName: awsId(),
+                    ScheduleActionSettings: {},
+                    ScheduleActionStartSettings: {
+                        ImmediateModeScheduleActionStartSettings: {},
+                    },
+                },
+            ],
+        },
+    });
+}
+
 export {
     Room,
     handleRoomDeleted,
     handleRoomCreated,
     handleWebhook,
     handleGenerateToken,
+    handleSwitch,
 };
