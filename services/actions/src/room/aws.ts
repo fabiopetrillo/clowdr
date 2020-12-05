@@ -1,3 +1,4 @@
+import { CloudFormation } from "@aws-sdk/client-cloudformation";
 import { CloudFront } from "@aws-sdk/client-cloudfront";
 import { MediaLive } from "@aws-sdk/client-medialive";
 import { MediaPackage } from "@aws-sdk/client-mediapackage";
@@ -40,6 +41,13 @@ const cloudfront = new CloudFront({
     region,
 });
 
-const awsId = customAlphabet("abcdefghijklmnopqrstuvwxyz1234567890", 10);
+const cloudformation = new CloudFormation({
+    apiVersion: "2010-05-15",
+    credentials,
+    region,
+});
 
-export { mediapackage, medialive, cloudfront, awsId };
+const awsId = customAlphabet("abcdefghijklmnopqrstuvwxyz1234567890", 10);
+const shortId = customAlphabet("abcdefghijklmnopqrstuvwxyz1234567890", 5);
+
+export { mediapackage, medialive, cloudfront, cloudformation, awsId, shortId };

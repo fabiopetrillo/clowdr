@@ -5201,12 +5201,10 @@ export enum Role_Update_Column {
 /** columns and relationships of "Room" */
 export type Room = {
   __typename?: 'Room';
-  cloudfrontDistributionId?: Maybe<Scalars['String']>;
+  cloudFormationStackId?: Maybe<Scalars['String']>;
   createdAt: Scalars['timestamptz'];
   hlsUri?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
-  mediaLiveChannelId?: Maybe<Scalars['String']>;
-  mediaPackageChannelId?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   rtmpUri?: Maybe<Scalars['String']>;
   updatedAt: Scalars['timestamptz'];
@@ -5253,12 +5251,10 @@ export type Room_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Room_Bool_Exp>>>;
   _not?: Maybe<Room_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Room_Bool_Exp>>>;
-  cloudfrontDistributionId?: Maybe<String_Comparison_Exp>;
+  cloudFormationStackId?: Maybe<String_Comparison_Exp>;
   createdAt?: Maybe<Timestamptz_Comparison_Exp>;
   hlsUri?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
-  mediaLiveChannelId?: Maybe<String_Comparison_Exp>;
-  mediaPackageChannelId?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   rtmpUri?: Maybe<String_Comparison_Exp>;
   updatedAt?: Maybe<Timestamptz_Comparison_Exp>;
@@ -5273,12 +5269,10 @@ export enum Room_Constraint {
 
 /** input type for inserting data into table "Room" */
 export type Room_Insert_Input = {
-  cloudfrontDistributionId?: Maybe<Scalars['String']>;
+  cloudFormationStackId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   hlsUri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
-  mediaLiveChannelId?: Maybe<Scalars['String']>;
-  mediaPackageChannelId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   rtmpUri?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -5288,12 +5282,10 @@ export type Room_Insert_Input = {
 /** aggregate max on columns */
 export type Room_Max_Fields = {
   __typename?: 'Room_max_fields';
-  cloudfrontDistributionId?: Maybe<Scalars['String']>;
+  cloudFormationStackId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   hlsUri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
-  mediaLiveChannelId?: Maybe<Scalars['String']>;
-  mediaPackageChannelId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   rtmpUri?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -5302,12 +5294,10 @@ export type Room_Max_Fields = {
 
 /** order by max() on columns of table "Room" */
 export type Room_Max_Order_By = {
-  cloudfrontDistributionId?: Maybe<Order_By>;
+  cloudFormationStackId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   hlsUri?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  mediaLiveChannelId?: Maybe<Order_By>;
-  mediaPackageChannelId?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   rtmpUri?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -5317,12 +5307,10 @@ export type Room_Max_Order_By = {
 /** aggregate min on columns */
 export type Room_Min_Fields = {
   __typename?: 'Room_min_fields';
-  cloudfrontDistributionId?: Maybe<Scalars['String']>;
+  cloudFormationStackId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   hlsUri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
-  mediaLiveChannelId?: Maybe<Scalars['String']>;
-  mediaPackageChannelId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   rtmpUri?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -5331,12 +5319,10 @@ export type Room_Min_Fields = {
 
 /** order by min() on columns of table "Room" */
 export type Room_Min_Order_By = {
-  cloudfrontDistributionId?: Maybe<Order_By>;
+  cloudFormationStackId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   hlsUri?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  mediaLiveChannelId?: Maybe<Order_By>;
-  mediaPackageChannelId?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   rtmpUri?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -5367,12 +5353,10 @@ export type Room_On_Conflict = {
 
 /** ordering options when selecting data from "Room" */
 export type Room_Order_By = {
-  cloudfrontDistributionId?: Maybe<Order_By>;
+  cloudFormationStackId?: Maybe<Order_By>;
   createdAt?: Maybe<Order_By>;
   hlsUri?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  mediaLiveChannelId?: Maybe<Order_By>;
-  mediaPackageChannelId?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   rtmpUri?: Maybe<Order_By>;
   updatedAt?: Maybe<Order_By>;
@@ -5387,17 +5371,13 @@ export type Room_Pk_Columns_Input = {
 /** select columns of table "Room" */
 export enum Room_Select_Column {
   /** column name */
-  CloudfrontDistributionId = 'cloudfrontDistributionId',
+  CloudFormationStackId = 'cloudFormationStackId',
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
   HlsUri = 'hlsUri',
   /** column name */
   Id = 'id',
-  /** column name */
-  MediaLiveChannelId = 'mediaLiveChannelId',
-  /** column name */
-  MediaPackageChannelId = 'mediaPackageChannelId',
   /** column name */
   Name = 'name',
   /** column name */
@@ -5410,12 +5390,10 @@ export enum Room_Select_Column {
 
 /** input type for updating data in table "Room" */
 export type Room_Set_Input = {
-  cloudfrontDistributionId?: Maybe<Scalars['String']>;
+  cloudFormationStackId?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   hlsUri?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
-  mediaLiveChannelId?: Maybe<Scalars['String']>;
-  mediaPackageChannelId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   rtmpUri?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -5425,17 +5403,13 @@ export type Room_Set_Input = {
 /** update columns of table "Room" */
 export enum Room_Update_Column {
   /** column name */
-  CloudfrontDistributionId = 'cloudfrontDistributionId',
+  CloudFormationStackId = 'cloudFormationStackId',
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
   HlsUri = 'hlsUri',
   /** column name */
   Id = 'id',
-  /** column name */
-  MediaLiveChannelId = 'mediaLiveChannelId',
-  /** column name */
-  MediaPackageChannelId = 'mediaPackageChannelId',
   /** column name */
   Name = 'name',
   /** column name */
@@ -9060,10 +9034,8 @@ export type Uuid_Comparison_Exp = {
 
 export type CompleteRoomMutationVariables = Exact<{
   id: Scalars['uuid'];
-  cloudfrontDistributionId: Scalars['String'];
   hlsUri: Scalars['String'];
-  mediaLiveChannelId: Scalars['String'];
-  mediaPackageChannelId: Scalars['String'];
+  cloudFormationStackId: Scalars['String'];
   rtmpUri: Scalars['String'];
   vonageSessionId: Scalars['String'];
 }>;
@@ -9103,21 +9075,7 @@ export type GetRoomQuery = (
   )> }
 );
 
-export type GetMediaLiveChannelQueryVariables = Exact<{
-  roomId: Scalars['uuid'];
-}>;
 
-
-export type GetMediaLiveChannelQuery = (
-  { __typename?: 'query_root' }
-  & { Room: Array<(
-    { __typename?: 'Room' }
-    & Pick<Room, 'mediaLiveChannelId'>
-  )> }
-);
-
-
-export const CompleteRoomDocument: DocumentNode<CompleteRoomMutation, CompleteRoomMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"completeRoom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cloudfrontDistributionId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hlsUri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mediaLiveChannelId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mediaPackageChannelId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rtmpUri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_Room"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"cloudfrontDistributionId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cloudfrontDistributionId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"hlsUri"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hlsUri"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"mediaLiveChannelId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mediaLiveChannelId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"mediaPackageChannelId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mediaPackageChannelId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"rtmpUri"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rtmpUri"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"vonageSessionId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]};
+export const CompleteRoomDocument: DocumentNode<CompleteRoomMutation, CompleteRoomMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"completeRoom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hlsUri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cloudFormationStackId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rtmpUri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_Room"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"hlsUri"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hlsUri"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"cloudFormationStackId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cloudFormationStackId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"rtmpUri"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rtmpUri"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"vonageSessionId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]};
 export const GetRoomBySessionIdDocument: DocumentNode<GetRoomBySessionIdQuery, GetRoomBySessionIdQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRoomBySessionId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Room"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"vonageSessionId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"vonageSessionId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rtmpUri"}}]}}]}}]};
 export const GetRoomDocument: DocumentNode<GetRoomQuery, GetRoomQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRoom"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"roomId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Room"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"roomId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vonageSessionId"}}]}}]}}]};
-export const GetMediaLiveChannelDocument: DocumentNode<GetMediaLiveChannelQuery, GetMediaLiveChannelQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getMediaLiveChannel"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"roomId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Room"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"roomId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mediaLiveChannelId"}}]}}]}}]};

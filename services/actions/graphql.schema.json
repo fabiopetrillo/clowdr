@@ -32151,7 +32151,7 @@
         "description": "columns and relationships of \"Room\"",
         "fields": [
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": null,
             "args": [],
             "type": {
@@ -32202,30 +32202,6 @@
                 "name": "uuid",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mediaPackageChannelId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -32544,7 +32520,7 @@
             "defaultValue": null
           },
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
@@ -32579,26 +32555,6 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "uuid_comparison_exp",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "String_comparison_exp",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaPackageChannelId",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "String_comparison_exp",
               "ofType": null
             },
             "defaultValue": null
@@ -32672,7 +32628,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -32707,26 +32663,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaPackageChannelId",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
               "ofType": null
             },
             "defaultValue": null
@@ -32782,7 +32718,7 @@
         "description": "aggregate max on columns",
         "fields": [
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": null,
             "args": [],
             "type": {
@@ -32824,30 +32760,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mediaPackageChannelId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -32914,7 +32826,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -32945,26 +32857,6 @@
           },
           {
             "name": "id",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaPackageChannelId",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -33024,7 +32916,7 @@
         "description": "aggregate min on columns",
         "fields": [
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": null,
             "args": [],
             "type": {
@@ -33066,30 +32958,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mediaPackageChannelId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -33156,7 +33024,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -33187,26 +33055,6 @@
           },
           {
             "name": "id",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaPackageChannelId",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -33410,7 +33258,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -33441,26 +33289,6 @@
           },
           {
             "name": "id",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "order_by",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaPackageChannelId",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -33548,7 +33376,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -33567,18 +33395,6 @@
           },
           {
             "name": "id",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mediaPackageChannelId",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -33617,7 +33433,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -33652,26 +33468,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "uuid",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null
-          },
-          {
-            "name": "mediaPackageChannelId",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
               "ofType": null
             },
             "defaultValue": null
@@ -33730,7 +33526,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "cloudfrontDistributionId",
+            "name": "cloudFormationStackId",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -33749,18 +33545,6 @@
           },
           {
             "name": "id",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mediaLiveChannelId",
-            "description": "column name",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mediaPackageChannelId",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null

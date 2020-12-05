@@ -1,0 +1,263 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ---
+Parameters:
+  RoomName:
+    Description: The name of the room this channel is connected to
+    Type: String
+  S3BucketName:
+    Description: The name of the S3 bucket that the new channel should have access to
+    Type: String
+Resources:
+  MediaLiveInputSecurityGroup:
+    Type: AWS::MediaLive::InputSecurityGroup
+    Properties:
+      WhitelistRules:
+        - Cidr: "0.0.0.0/0"
+  MediaLiveAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: medialive.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
+      Policies:
+        - PolicyName: "MediaLiveCustomPolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:DeleteObject
+                Resource: !Sub "arn:aws:s3:::${S3BucketName}/*"
+              - Effect: Allow
+                Action:
+                  - mediastore:ListContainers
+                  - mediastore:PutObject
+                  - mediastore:GetObject
+                  - mediastore:DeleteObject
+                  - mediastore:DescribeObject
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - logs:DescribeLogStreams
+                  - logs:DescribeLogGroups
+                Resource: arn:aws:logs:*:*:*
+              - Effect: Allow
+                Action:
+                  - mediaconnect:ManagedDescribeFlow
+                  - mediaconnect:ManagedAddOutput
+                  - mediaconnect:ManagedRemoveOutput
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - ec2:describeSubnets
+                  - ec2:describeNetworkInterfaces
+                  - ec2:createNetworkInterface
+                  - ec2:createNetworkInterfacePermission
+                  - ec2:deleteNetworkInterface
+                  - ec2:deleteNetworkInterfacePermission
+                  - ec2:describeSecurityGroups
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - mediapackage:DescribeChannel
+                Resource: "*"
+  LiveInput:
+    Type: AWS::MediaLive::Input
+    Properties:
+      Name: !Sub "${RoomName}-live-input"
+      Tags:
+        RoomName: !Ref RoomName
+      Destinations:
+        - StreamName: live
+      Type: RTMP_PUSH
+      InputSecurityGroups:
+        - !Ref MediaLiveInputSecurityGroup
+  RecordedInput:
+    Type: AWS::MediaLive::Input
+    Properties:
+      Name: !Sub "${RoomName}-recorded-input"
+      Sources:
+        - Url: !Sub "s3ssl://${S3BucketName}/$urlPath$"
+      Tags:
+        RoomName: !Ref RoomName
+      Type: MP4_FILE
+  RoomChannel:
+    Type: AWS::MediaLive::Channel
+    Properties:
+      Tags:
+        RoomName: !Ref RoomName
+      ChannelClass: SINGLE_PIPELINE
+      Destinations:
+        - Id: media-package-destination
+          MediaPackageSettings:
+            - ChannelId: !Ref MediaPackage
+      EncoderSettings:
+        AudioDescriptions:
+          - AudioTypeControl: FOLLOW_INPUT
+            CodecSettings:
+              AacSettings:
+                Bitrate: 192000
+                CodingMode: CODING_MODE_2_0
+                InputType: NORMAL
+                Profile: LC
+                RateControlMode: CBR
+                RawFormat: NONE
+                SampleRate: 48000
+                Spec: MPEG4
+            LanguageCodeControl: FOLLOW_INPUT
+            Name: audio
+        OutputGroups:
+          - Name: MediaPackage Group
+            OutputGroupSettings:
+              MediaPackageGroupSettings:
+                Destination:
+                  DestinationRefId: media-package-destination
+            Outputs:
+              - AudioDescriptionNames:
+                  - audio
+                OutputName: 1080p30
+                OutputSettings:
+                  MediaPackageOutputSettings: {}
+                VideoDescriptionName: video
+        TimecodeConfig:
+          Source: SYSTEMCLOCK
+        VideoDescriptions:
+          - CodecSettings:
+              H264Settings:
+                AdaptiveQuantization: MEDIUM
+                AfdSignaling: NONE
+                ColorMetadata: INSERT
+                EntropyEncoding: CABAC
+                FlickerAq: ENABLED
+                FramerateControl: SPECIFIED
+                FramerateDenominator: 1
+                FramerateNumerator: 30
+                GopBReference: DISABLED
+                GopClosedCadence: 1
+                GopNumBFrames: 2
+                GopSize: 90
+                GopSizeUnits: FRAMES
+                Level: H264_LEVEL_AUTO
+                LookAheadRateControl: MEDIUM
+                NumRefFrames: 1
+                ParControl: SPECIFIED
+                ParDenominator: 1
+                ParNumerator: 1
+                Profile: MAIN
+                RateControlMode: CBR
+                SceneChangeDetect: ENABLED
+                SpatialAq: ENABLED
+                SubgopLength: FIXED
+                Syntax: DEFAULT
+                TemporalAq: ENABLED
+                TimecodeInsertion: DISABLED
+            Height: 1080
+            Width: 1920
+            Name: video
+            RespondToAfd: NONE
+            Sharpness: 50
+            ScalingBehavior: DEFAULT
+      InputAttachments:
+        - InputAttachmentName: LiveInput
+          InputId: !Ref LiveInput
+        - InputAttachmentName: RecordedInput
+          InputId: !Ref RecordedInput
+      InputSpecification:
+        Codec: AVC
+        MaximumBitrate: MAX_20_MBPS
+        Resolution: HD
+      Name: !Ref RoomName
+      RoleArn: !GetAtt MediaLiveAccessRole.Arn
+  MediaPackage:
+    Type: AWS::MediaPackage::Channel
+    Properties:
+      Id: !Sub "${RoomName}-mp-channel"
+      Tags:
+        - Key: RoomName
+          Value: !Ref RoomName
+  OriginEndpoint:
+    Type: AWS::MediaPackage::OriginEndpoint
+    Properties:
+      ChannelId: !Ref MediaPackage
+      HlsPackage:
+        AdMarkers: NONE
+        IncludeIframeOnlyStream: false
+        PlaylistType: EVENT
+        PlaylistWindowSeconds: 60
+        ProgramDateTimeIntervalSeconds: 0
+        SegmentDurationSeconds: 6
+        StreamSelection:
+          MaxVideoBitsPerSecond: 200000000
+          MinVideoBitsPerSecond: 0
+          StreamOrder: ORIGINAL
+        UseAudioRenditionGroup: false
+      Id: !Ref RoomName
+      Origination: ALLOW
+      StartoverWindowSeconds: 300
+      TimeDelaySeconds: 0
+  Distribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Comment: !Sub "CloudFront distribution for ${RoomName} channel"
+        DefaultCacheBehavior:
+          AllowedMethods: [HEAD, GET]
+          CachedMethods: [HEAD, GET]
+          DefaultTTL: 86400
+          FieldLevelEncryptionId: ""
+          ForwardedValues:
+            QueryString: true
+            Cookies:
+              Forward: "none"
+            Headers: []
+            QueryStringCacheKeys: [end, m, start]
+          MinTTL: 0
+          MaxTTL: 31536000
+          TargetOriginId: mediapackage-origin
+          ViewerProtocolPolicy: redirect-to-https
+        Enabled: true
+        Origins:
+          - Id: mediapackage-origin
+            DomainName: !Select [2, !Split ["/", !GetAtt OriginEndpoint.Url]]
+            CustomOriginConfig:
+              HTTPPort: 80
+              HTTPSPort: 443
+              OriginProtocolPolicy: match-viewer
+              OriginSSLProtocols: [TLSv1, TLSv1.1, TLSv1.2]
+              OriginReadTimeout: 30
+              OriginKeepaliveTimeout: 5
+            ConnectionAttempts: 3
+            ConnectionTimeout: 10
+            OriginShield:
+              Enabled: false
+        PriceClass: PriceClass_100
+
+      Tags:
+        - Key: RoomName
+          Value: !Ref RoomName
+
+Outputs:
+  RtmpUri:
+    Description: Input URI for RTMP streams
+    Value: !Select [0, !GetAtt LiveInput.Destinations]
+  ChannelId:
+    Description: MediaLive channel id
+    Value: !Ref RoomChannel
+  OriginEndpointUri:
+    Description: Output HLS URI from MediaPackage
+    Value: !GetAtt OriginEndpoint.Url
+  DistributionDomain:
+    Description: Domain name for the CloudFront distribution
+    Value: !GetAtt Distribution.DomainName

@@ -1,28 +1,15 @@
 import { gql } from "@apollo/client/core";
+import fs from "fs/promises";
+import path from "path";
+import slugify from "slugify";
 import {
     CompleteRoomDocument,
-    GetMediaLiveChannelDocument,
     GetRoomBySessionIdDocument,
     GetRoomDocument,
 } from "../generated/graphql";
 import { client } from "../graphqlClient";
 import { Payload } from "../types/event";
-import { awsId, medialive } from "./aws";
-import {
-    createDistribution,
-    deleteDistributionResources,
-} from "./awsCloudFront";
-import {
-    createChannel as createMediaLiveChannel,
-    createInput,
-    createOrGetInputSecurityGroup,
-    deleteChannelResources as deleteMediaLiveChannelResources,
-} from "./awsMediaLive";
-import {
-    createChannel as createMediaPackageChannel,
-    createOriginEndpoint,
-    deleteChannelResources as deleteMediaPackageChannelResources,
-} from "./awsMediaPackage";
+import { awsId, cloudformation, shortId } from "./aws";
 import {
     createSession,
     listBroadcasts,
@@ -37,30 +24,24 @@ interface Room {
     updatedAt: string;
     name: string;
     vonageSessionId: string | null;
+    cloudFormationStackId: string | null;
     rtmpUri: string | null;
     hlsUri: string | null;
-    mediaLiveChannelId: string | null;
-    mediaPackageChannelId: string | null;
-    cloudfrontDistributionId: string | null;
 }
 
 gql`
     mutation completeRoom(
         $id: uuid!
-        $cloudfrontDistributionId: String!
         $hlsUri: String!
-        $mediaLiveChannelId: String!
-        $mediaPackageChannelId: String!
+        $cloudFormationStackId: String!
         $rtmpUri: String!
         $vonageSessionId: String!
     ) {
         update_Room(
             where: { id: { _eq: $id } }
             _set: {
-                cloudfrontDistributionId: $cloudfrontDistributionId
                 hlsUri: $hlsUri
-                mediaLiveChannelId: $mediaLiveChannelId
-                mediaPackageChannelId: $mediaPackageChannelId
+                cloudFormationStackId: $cloudFormationStackId
                 rtmpUri: $rtmpUri
                 vonageSessionId: $vonageSessionId
             }
@@ -79,63 +60,85 @@ async function handleRoomCreated(payload: Payload<Room>): Promise<void> {
 
     const roomName = payload.event.data.new.name;
 
-    let channelId: string | undefined;
-    let mediaPackageChannelId: string | undefined;
-    try {
-        console.log(`Creating AWS pipeline for room ${roomName}`);
-        const securityGroupId = await createOrGetInputSecurityGroup();
-        const input = await createInput(roomName, securityGroupId);
-        mediaPackageChannelId = await createMediaPackageChannel(roomName);
-        channelId = await createMediaLiveChannel(
-            roomName,
-            input.id,
-            mediaPackageChannelId
-        );
-        const originEndpoint = await createOriginEndpoint(
-            roomName,
-            mediaPackageChannelId
-        );
-        const distribution = await createDistribution(roomName, originEndpoint);
+    console.log(`Creating AWS pipeline for room ${roomName}`);
 
-        const finalUri = new URL(originEndpoint.endpointUri);
-        finalUri.hostname = distribution.domain;
+    const slug = `${shortId()}-${slugify(roomName, {
+        lower: true,
+        strict: true,
+        locale: "en",
+    }).substring(0, 7)}`;
 
-        console.log(`Creating OpenTok session for room ${roomName}`);
-        const session = await createSession({ mediaMode: "routed" });
-        if (!session?.sessionId) {
-            throw new Error("Failed to create OpenTok session");
-        }
+    const channelTemplate = await fs.readFile(
+        path.join(__dirname, "channelTemplate.yaml")
+    );
 
-        console.log(`Updating entry for room ${roomName}`);
-        await client.mutate({
-            mutation: CompleteRoomDocument,
-            variables: {
-                id: payload.event.data.new.id,
-                cloudfrontDistributionId: distribution.id,
-                mediaLiveChannelId: channelId,
-                mediaPackageChannelId: mediaPackageChannelId,
-                hlsUri: finalUri.toString(),
-                rtmpUri: input.rtmpUri,
-                vonageSessionId: session.sessionId,
-            },
-        });
-        console.log(`Handled creation of room ${roomName}`);
-    } catch (e) {
-        console.error("Error while handling room creation", e);
-        if (channelId) {
-            try {
-                await deleteMediaLiveChannelResources(channelId);
-                // eslint-disable-next-line no-empty
-            } catch (_) {}
-        }
-        if (mediaPackageChannelId) {
-            try {
-                await deleteMediaPackageChannelResources(mediaPackageChannelId);
-                // eslint-disable-next-line no-empty
-            } catch (_) {}
-        }
-        throw e;
+    if (!channelTemplate) {
+        throw new Error("Could not load channelTemplate.yaml");
     }
+
+    const stackCreation = await cloudformation.createStack({
+        StackName: `channel-${slug}`,
+        Capabilities: ["CAPABILITY_IAM"],
+        Parameters: [
+            { ParameterKey: "RoomName", ParameterValue: slug },
+            {
+                ParameterKey: "S3BucketName",
+                ParameterValue: "clowdr-1u2k34j12923uy",
+            },
+        ],
+
+        TemplateBody: channelTemplate.toString(),
+    });
+
+    const stack = await cloudformation.describeStacks({
+        StackName: stackCreation.StackId ?? `channel-${slug}`,
+    });
+
+    if (!stack.Stacks || !stack.Stacks[0].StackId) {
+        throw new Error("No CloudFormation stacks found");
+    }
+
+    console.log(
+        `Created channel as CloudFormation stack ${stack.Stacks[0].StackId}`
+    );
+
+    const rtmpUri = stack.Stacks[0].Outputs?.find(
+        (output) => output.OutputKey === "RtmpUri"
+    )?.OutputValue;
+    const originEndpointUri = stack.Stacks[0].Outputs?.find(
+        (output) => output.OutputKey === "OriginEndpointUri"
+    )?.OutputValue;
+    const distributionDomain = stack.Stacks[0].Outputs?.find(
+        (output) => output.OutputKey === "DistributionDomain"
+    )?.OutputValue;
+
+    if (!rtmpUri || !originEndpointUri || !distributionDomain) {
+        throw new Error(
+            "Did not receive expected outputs from CloudFormation stack"
+        );
+    }
+
+    const finalUri = new URL(originEndpointUri);
+    finalUri.hostname = distributionDomain;
+
+    console.log(`Creating OpenTok session for room ${roomName}`);
+    const session = await createSession({ mediaMode: "routed" });
+    if (!session?.sessionId) {
+        throw new Error("Failed to create OpenTok session");
+    }
+
+    console.log(`Updating entry for room ${roomName}`);
+    await client.mutate({
+        mutation: CompleteRoomDocument,
+        variables: {
+            id: payload.event.data.new.id,
+            cloudFormationStackId: stack.Stacks[0].StackId,
+            hlsUri: finalUri.toString(),
+            rtmpUri: rtmpUri,
+            vonageSessionId: session.sessionId,
+        },
+    });
+    console.log(`Handled creation of room ${roomName}`);
 }
 
 async function handleRoomDeleted(payload: Payload<Room>): Promise<void> {
@@ -145,25 +148,10 @@ async function handleRoomDeleted(payload: Payload<Room>): Promise<void> {
         throw new Error("No old data");
     }
 
-    if (payload.event.data.old.mediaLiveChannelId) {
-        console.log("Cleaning up MediaLive resources");
-        await deleteMediaLiveChannelResources(
-            payload.event.data.old.mediaLiveChannelId
-        );
-    }
-
-    if (payload.event.data.old.mediaPackageChannelId) {
-        console.log("Cleaning up MediaPackage resources");
-        await deleteMediaPackageChannelResources(
-            payload.event.data.old.mediaPackageChannelId
-        );
-    }
-
-    if (payload.event.data.old.cloudfrontDistributionId) {
-        console.log("Cleaning up CloudFront resources");
-        await deleteDistributionResources(
-            payload.event.data.old.cloudfrontDistributionId
-        );
+    if (payload.event.data.old.cloudFormationStackId) {
+        await cloudformation.deleteStack({
+            StackName: payload.event.data.old.cloudFormationStackId,
+        });
     }
 
     console.log(`Handled deletion of room ${payload.event.data.old.name}`);
@@ -245,44 +233,43 @@ async function handleGenerateToken(roomId: string): Promise<string> {
     return token;
 }
 
-gql`
-    query getMediaLiveChannel($roomId: uuid!) {
-        Room(where: { id: { _eq: $roomId } }) {
-            mediaLiveChannelId
-        }
-    }
-`;
+// gql`
+//     query getMediaLiveChannel($roomId: uuid!) {
+//         Room(where: { id: { _eq: $roomId } }) {
+//             mediaLiveChannelId
+//         }
+//     }
+// `;
 
-async function handleSwitch(roomId: string): Promise<void> {
-    const result = await client.query({
-        query: GetMediaLiveChannelDocument,
-        variables: {
-            roomId,
-        },
-    });
-    if (
-        !result.data.Room ||
-        result.data.Room.length !== 1 ||
-        !result.data.Room[0].mediaLiveChannelId
-    ) {
-        throw new Error("No MediaLive channel for this Room");
-    }
-
-    await medialive.batchUpdateSchedule({
-        ChannelId: result.data.Room[0].mediaLiveChannelId,
-        Creates: {
-            ScheduleActions: [
-                {
-                    ActionName: awsId(),
-                    ScheduleActionSettings: {},
-                    ScheduleActionStartSettings: {
-                        ImmediateModeScheduleActionStartSettings: {},
-                    },
-                },
-            ],
-        },
-    });
-}
+// async function handleSwitch(roomId: string): Promise<void> {
+// const result = await client.query({
+//     query: GetMediaLiveChannelDocument,
+//     variables: {
+//         roomId,
+//     },
+// });
+// if (
+//     !result.data.Room ||
+//     result.data.Room.length !== 1 ||
+//     !result.data.Room[0].mediaLiveChannelId
+// ) {
+//     throw new Error("No MediaLive channel for this Room");
+// }
+// await medialive.batchUpdateSchedule({
+//     ChannelId: result.data.Room[0].mediaLiveChannelId,
+//     Creates: {
+//         ScheduleActions: [
+//             {
+//                 ActionName: awsId(),
+//                 ScheduleActionSettings: {},
+//                 ScheduleActionStartSettings: {
+//                     ImmediateModeScheduleActionStartSettings: {},
+//                 },
+//             },
+//         ],
+//     },
+// });
+// }
 
 export {
     Room,
@@ -290,5 +277,4 @@ export {
     handleRoomCreated,
     handleWebhook,
     handleGenerateToken,
-    handleSwitch,
 };
