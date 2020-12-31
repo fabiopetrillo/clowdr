@@ -1,6 +1,10 @@
-MIT License
+The files in this folder are adapted from react-use-opentok, whose license is reproduced here.
 
-Copyright (c) 2019 Fred K. Schott
+https://github.com/pjchender/react-use-opentok
+
+The MIT License (MIT)
+
+Copyright (c) 2020 PJCHENder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
